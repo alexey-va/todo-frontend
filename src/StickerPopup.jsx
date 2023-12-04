@@ -36,17 +36,17 @@ export default function StickerPopup({ selectedTags, setSelectedTags, allTags, n
     <>
       <form id="myform">
         <div
-          className={`fixed top-0 left-0 w-screen h-screen flex items-center justify-center z-[5] ${index === -2 ? "scale-0" : ""}
-      ${index >= -1 ? "z-10 opacity-100" : "opacity-0 -z-[1]"} backdrop-blur-[2px] fixed w-screen h-screen top-0 left-0 
-       duration-150 ease-out transition-all cursor-pointer`}
+          className={`fixed top-0 left-0 w-screen h-screen flex items-center justify-center z-[2] ${index === -2 ? "scale-0" : ""}
+      ${index >= -1 ? "z-[2]" : "-z-[1]"} backdrop-blur-[2px] fixed w-screen h-screen top-0 left-0 
+       duration-300 ease-out transition-all cursor-pointer`}
           onMouseDown={(event) => {
             let form = document.getElementById("myform");
             form.reset();
             modified.current=false;
             clear();
           }}>
-          <div className={`p-5 max-h-[40rem]  max-w-3xl w-1/2  bg-white rounded-xl z-[25] border-1 drop-shadow-2xl
-        left-[10%] ${index === -2 ? "scale-0" : ""}  transition-all ease-out duration-100 cursor-default
+          <div className={`p-5 max-h-[40rem]  max-w-3xl w-1/2  bg-white rounded-xl z-[3] border-1 drop-shadow-2xl
+        left-[10%] ${index === -2 ? "" : ""}  transition-all ease-out duration-300 cursor-default
         `}
                onMouseDown={(event) => event.stopPropagation()}>
             <div className=" flex flex-col gap-2 h-full">
