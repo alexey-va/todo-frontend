@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 
-export default function Lists({ selected, setSelected, lists, setLists }) {
+export default function Lists({ selected, setSelected }) {
+
+  const [lists, setLists] = useState([
+    {name: "Personal", color: "#FF6B6B", new: 12, id: 4},
+    {name: "Work", color: "#66D9E8", new: 5, id: 5},
+    {name: "List 1", color: "#FFD43B", new: 0, id: 6},
+  ])
+
   return (
     <>
       <div className="mb-1 mt-3 px-3 text-[0.55rem] font-bold opacity-60 uppercase">Lists</div>
