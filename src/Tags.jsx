@@ -49,21 +49,24 @@ export default function Tags({ parentTagsData, setParentTags, allTags, switchTag
       </div>
       </div>
 
-      <div className={`${add} text-[0.6rem] font-bold w-full min-h-[2rem]`}>
+      <div className={`${add} w-fit h-fit flex text-[0.6rem] font-bold  min-h-[2rem]`}>
         {allTags.map((value) => {
 
-          if (parentTagsData !== undefined && !parentTagsData.includes(value.id)) return "";
+          //if (parentTagsData !== undefined && !parentTagsData.includes(value.id)) return "";
           return (
             <div
               key={value.id}
-              className="m-0.5 inline-block cursor-pointer self-start rounded-[5px] bg-green-200 pl-2.5 pr-1.5
-              py-1 text-gray-600 hover:saturate-200 group"
+              className={`${parentTagsData !== undefined && !parentTagsData.includes(value.id) ? "" :
+                  "m-0.5 inline-block w-fit scale-100 pl-2.5 pr-1.5"}
+                    cursor-pointer scale-0 w-0 self-start rounded-[5px] bg-green-200 
+                      py-1 text-gray-600 hover:saturate-200 group whitespace-nowrap transition-all
+                      `}
               style={{ backgroundColor: value.color }}
               onClick={() => {
                 setParentTags(parentTagsData.filter(el => el !== value.id));
               }}
             >
-              <div className="flex gap-2 ">
+              <div className="flex gap-2">
                 <div>{value.name}</div>
               </div>
             </div>

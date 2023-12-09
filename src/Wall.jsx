@@ -71,7 +71,7 @@ export function Wall({ allTags, searchTags }) {
     <div className="h-full px-4 relative flex flex-col">
       <StickerPopup clear={clear} selectedTags={selectedTags} setSelectedTags={setSelectedTags} index={pop}
                     notes={notes} allTags={allTags} changeNote={changeNote} />
-      <div className="text-[1.75rem] font-semibold flex items-center p-2">
+      <div className="text-[1.75rem] font-semibold flex items-center pb-2">
         <div className="">Sticky Wall</div>
       </div>
       <div className="no-scrollbar h-full overflow-y-scroll rounded-lg border">
@@ -98,8 +98,6 @@ export function Wall({ allTags, searchTags }) {
                 </div>
 
                 <div className="text-[0.6rem] max-sm:mb-2">{value.text}</div>
-
-                <TagList add={`mt-auto`} allTags={allTags.current} parentTagsData={value.tags}/>
               </div>
             );
           })}
