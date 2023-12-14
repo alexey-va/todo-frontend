@@ -1,5 +1,4 @@
-import search from "./assets/icons8-search.svg";
-import React, { useState } from "react";
+import search from "../../assets/icons8-search.svg";
 
 export default function Nav(){
 
