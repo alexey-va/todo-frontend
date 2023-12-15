@@ -1,9 +1,9 @@
-import Tags from "../other/Tags.jsx";
+import Tags from "./Tags.jsx";
 import { editedSticker, stickers } from "../../Signals.jsx";
-import { useEffect, useRef } from "react";
-import { effect, useSignalEffect } from "@preact/signals-react";
+import { useRef } from "react";
 
-export default function StickerPopup() {
+
+export default function StickerEditor() {
   const title = useRef();
   const text = useRef();
   const formRef = useRef();
@@ -17,14 +17,14 @@ export default function StickerPopup() {
   };
 
   const checkValid = () => {
-    if(title.current.value.length < 3) title.current.setCustomValidity("none")
-    else title.current.setCustomValidity("")
-  }
+    if (title.current.value.length < 3) title.current.setCustomValidity("none");
+    else title.current.setCustomValidity("");
+  };
 
   const getUpdateData = () => {
-    checkValid()
+    checkValid();
     if (!editedSticker.value.modified) return;
-    if (!title.current.checkValidity()){
+    if (!title.current.checkValidity()) {
       return;
     }
     let dict = { ...editedSticker.value };
@@ -66,7 +66,7 @@ export default function StickerPopup() {
           >
             <textarea
               className={`no-scrollbar h-[2.3rem] resize-none overflow-hidden whitespace-nowrap rounded-md
-                 bg-gray-200 p-2 drop-shadow border-red-500 invalid:border
+                 border-red-500 bg-gray-200 p-2 drop-shadow invalid:border
                 focus:outline-0`}
               placeholder={`Заголовок`}
               defaultValue={editedSticker.value.title}
@@ -75,22 +75,22 @@ export default function StickerPopup() {
               onChange={() => {
                 editedSticker.value.modified = true;
                 editedSticker.value.title = title.current.value;
-                checkValid()
+                checkValid();
               }}
             />
-            <div className="flex-grow flex">
-            <div className="h-auto w-full">
-              <textarea
-                className={`h-full w-full resize-none rounded-md bg-gray-200 p-2 drop-shadow focus:outline-0`}
-                placeholder={`Текст`}
-                defaultValue={editedSticker.value.text}
-                ref={text}
-                onChange={() => {
-                  editedSticker.value.modified = true;
-                  editedSticker.value.text = text.current.value;
-                }}
-              />
-            </div>
+            <div className="flex flex-grow">
+              <div className="h-auto w-full">
+                <textarea
+                  className={`h-full w-full resize-none rounded-md bg-gray-200 p-2 drop-shadow focus:outline-0`}
+                  placeholder={`Текст`}
+                  defaultValue={editedSticker.value.text}
+                  ref={text}
+                  onChange={() => {
+                    editedSticker.value.modified = true;
+                    editedSticker.value.text = text.current.value;
+                  }}
+                />
+              </div>
             </div>
 
             <div className="flex flex-wrap">

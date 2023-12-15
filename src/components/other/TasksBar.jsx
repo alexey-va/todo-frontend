@@ -6,7 +6,7 @@ import sticker from "../../assets/sticker-square-svgrepo-com.svg";
 import { tasksNew } from "../../Signals.jsx";
 import { selectedSection } from "../../Signals.jsx";
 
-export default function Tasks() {
+export default function TasksBar() {
   return (
     <>
       <div className="mb-1 mt-3 px-3 text-[0.5rem] font-bold uppercase opacity-60">

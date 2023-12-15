@@ -1,6 +1,11 @@
 import { allTags } from "../../Signals.jsx";
 
-export default function Tags({ parentTagsSignal, onChange, add }) {
+export default function Tags({
+  parentTagsSignal,
+  onChange,
+  add,
+  withAddButton,
+}) {
   return (
     <>
       <div className={`${add} text-[0.5rem]`}>
@@ -54,11 +59,29 @@ export default function Tags({ parentTagsSignal, onChange, add }) {
                     }}
                   >
                     <div className="flex gap-2">
-                      <div>{value.name}</div>
+                      <div>{value.title}</div>
                     </div>
                   </div>
                 );
               })}
+              {withAddButton ? (
+                <div
+                  key={-1}
+                  className={`group m-0.5 hidden w-fit scale-100 cursor-pointer self-start
+                    whitespace-nowrap rounded-[5px] bg-gray-300 py-1 pl-2.5
+                      pr-2.5 text-gray-600 transition-all duration-100 hover:saturate-200 group-hover:inline-block
+                      `}
+                  onClick={() => console.log("Add tag")}
+                >
+                  <div className="flex items-center justify-center gap-2 text-[0.5rem] ">
+                    <div className="flex -translate-y-[0.1rem] scale-150 items-center justify-center">
+                      +
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
@@ -72,12 +95,11 @@ export default function Tags({ parentTagsSignal, onChange, add }) {
             parentTagsSignal.value.tags !== null &&
             parentTagsSignal.value.tags.includes(value.id);
           return (
-            <div
-              key={value.id}
-              className={`${isShown ? "w-fit mr-1" : "w-0"}`}
-            >
+            <div key={value.id} className={`${isShown ? "mr-1 w-fit" : "w-0"}`}>
               <div
-                className={`${isShown ? "" : "scale-0"} m-0.5 inline-block w-full cursor-pointer
+                className={`${
+                  isShown ? "" : "scale-0"
+                } m-0.5 inline-block w-full cursor-pointer
                     self-start  whitespace-nowrap rounded-[5px] py-1 
                       pl-2.5 pr-2.5 text-gray-600 transition-all hover:saturate-200
                       `}
@@ -93,7 +115,7 @@ export default function Tags({ parentTagsSignal, onChange, add }) {
                 }}
               >
                 <div className="flex gap-2">
-                  <div>{value.name}</div>
+                  <div>{value.title}</div>
                 </div>
               </div>
             </div>

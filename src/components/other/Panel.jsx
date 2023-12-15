@@ -1,18 +1,18 @@
-import Nav from "./Nav.jsx";
-import Tasks from "./Tasks.jsx";
-import Lists from "./Lists.jsx";
+import Navigation from "./Navigation.jsx";
+import TasksBar from "./TasksBar.jsx";
+import ListsBar from "./ListsBar.jsx";
 import Tags from "./Tags.jsx";
 import { useState } from "react";
-import { searchTags} from "../../Signals.jsx";
+import { searchTags } from "../../Signals.jsx";
 
 export default function Panel() {
   const [burger, setBurger] = useState(false);
 
   const setSearchTags = (tags) => {
-    let dict = searchTags.value
-    dict.tags = tags
-    searchTags.value = dict
-  }
+    let dict = searchTags.value;
+    dict.tags = tags;
+    searchTags.value = dict;
+  };
 
   return (
     <>
@@ -50,16 +50,21 @@ export default function Panel() {
               : "z-[5]"
           } w-full overflow-x-visible`}
         >
-          <Nav />
-          <Tasks />
+          <Navigation />
+          <TasksBar />
           <hr className="mx-2 my-2" />
-          <Lists />
+          <ListsBar />
           <hr className="mx-2 my-2 transition-all" />
           <div className="mb-2 mt-3 px-3 text-[0.55rem] font-bold uppercase opacity-60">
             Tags
           </div>
           <div className="w-full self-stretch overflow-x-visible">
-            <Tags add="px-2" parentTagsSignal={searchTags} onChange={() => {}} setParentTags={setSearchTags}/>
+            <Tags
+              add="px-2"
+              parentTagsSignal={searchTags}
+              onChange={() => {}}
+              setParentTags={setSearchTags}
+            />
           </div>
         </div>
       </div>

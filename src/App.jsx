@@ -1,22 +1,22 @@
 
 import { StickerWall } from "./components/content/StickerWall.jsx";
 import Panel from "./components/other/Panel.jsx";
-import Upcoming from "./components/content/Upcoming.jsx";
+import TasksUpcoming from "./components/content/TasksUpcoming.jsx";
 import {selectedSection} from "./Signals.jsx";
-import BiggieToday from "./components/content/BiggieToday.jsx";
+import TasksOfToday from "./components/content/TasksOfToday.jsx";
 import Calendar from "./components/content/Calendar.jsx";
-import ListView from "./components/content/ListView.jsx";
+import TasksOfList from "./components/content/TasksOfList.jsx";
 
 export default function App() {
   const getComponent = () => {
     if (selectedSection.value.group === "tasks") {
-      if (selectedSection.value.id === 0) return <Upcoming />;
-      else if (selectedSection.value.id === 1) return <BiggieToday />
+      if (selectedSection.value.id === 0) return <TasksUpcoming />;
+      else if (selectedSection.value.id === 1) return <TasksOfToday />
       else if(selectedSection.value.id === 2) return <Calendar />
       else if (selectedSection.value.id === 3)
         return <StickerWall/>;
     } else if(selectedSection.value.group === "lists"){
-      return <ListView listId={selectedSection.value.id} />
+      return <TasksOfList listId={selectedSection.value.id} />
     }
   };
 

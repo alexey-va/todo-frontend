@@ -1,6 +1,6 @@
 import { allTasks } from "../../Signals.jsx";
 
-export default function TaskList({ changeComplete, getAddList, predicate, title}){
+export default function Tasks({ changeComplete, getAddList, predicate, title}){
   let seen = false;
   return (
     <div className="flex h-full w-full flex-col rounded-md border p-3 text-[0.8rem]">

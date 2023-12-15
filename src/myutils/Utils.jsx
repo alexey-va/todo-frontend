@@ -2,6 +2,19 @@ import { allTasks, lists } from "../Signals.jsx";
 import dueDate from "../assets/due-date.svg";
 
 
+export function hexToRgb(hex) {
+  let c;
+  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+    c = hex.substring(1).split("");
+    if (c.length === 3) {
+      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+    }
+    c = "0x" + c.join("");
+    return "" + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",");
+  }
+  throw new Error("Bad Hex");
+}
+
 export const toPix = (rem) => {
   return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
@@ -12,6 +25,15 @@ export const changeComplete = (checked, id) => {
   arr[index].completed = checked;
   allTasks.value = arr;
 };
+
+export const sameDay = (d1, d2) => {
+  //console.log(d1+" "+d2)
+  if(!d1 || !d2) return false;
+  if(d1.getFullYear() !== d2.getFullYear())  return false;
+  if(d1.getMonth() !== d2.getMonth()) return false;
+  return d1.getDate() === d2.getDate();
+
+}
 
 export const getAddList = (value) => {
   let list = null;
@@ -54,7 +76,7 @@ export const getAddList = (value) => {
               className={`mr-1 aspect-square h-1.5 w-1.5 rounded-[2px]`}
               style={{ backgroundColor: list.color }}
             ></div>
-            <div className="">{list.name}</div>
+            <div className="">{list.title}</div>
             <div className="h-[1px] w-[1px]"></div>
           </div>
         </>
