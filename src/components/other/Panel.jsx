@@ -25,7 +25,7 @@ export default function Panel() {
       >
         <div
           className={
-            `${burger ? "max-sm:hidden" : ""}  h-full w-full max-sm:fixed`
+            `${burger ? "max-sm:hidden" : ""} max-sm:w-full max-sm:fixed max-sm:h-full`
           }
           onMouseDown={() => {
             console.log("down")
