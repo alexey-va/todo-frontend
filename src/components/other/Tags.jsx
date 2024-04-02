@@ -8,7 +8,7 @@ export default function Tags({
 }) {
   return (
     <>
-      <div className={`${add} text-[0.5rem]`}>
+      <div className={`${add} text-[0.75rem]`}>
         <div
           className={`group m-0.5 inline-block rounded-[5px] bg-gray-200 px-3
           py-1 font-bold text-gray-600`}
@@ -73,7 +73,7 @@ export default function Tags({
                       `}
                   onClick={() => console.log("Add tag")}
                 >
-                  <div className="flex items-center justify-center gap-2 text-[0.5rem] ">
+                  <div className="flex items-center justify-center gap-2 text-[0.75rem] ">
                     <div className="flex -translate-y-[0.1rem] scale-150 items-center justify-center">
                       +
                     </div>
@@ -88,7 +88,7 @@ export default function Tags({
       </div>
 
       <div
-        className={`${add} flex h-fit w-fit flex-wrap text-[0.5rem] font-bold`}
+        className={`${add} flex h-fit w-fit flex-wrap text-[0.75rem] font-bold`}
       >
         {allTags.value.map((value) => {
           let isShown =

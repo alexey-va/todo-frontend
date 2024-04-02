@@ -1,5 +1,10 @@
 import { useRef, useState } from "react";
-import { selectedSection, lists, listsNew } from "../../Signals.jsx";
+import {
+  selectedSection,
+  lists,
+  listsNew,
+  credentials, authed
+} from "../../Signals.jsx";
 
 export default function ListsBar() {
   const [create, setCreate] = useState(false);
@@ -30,23 +35,36 @@ export default function ListsBar() {
   };
 
   const addList = () => {
-    let maxId = -1;
     if (listInputRef.current.value === "") return;
     if (!listInputRef.current.checkValidity()) return;
-    lists.value.forEach((val) => {
-      if (val.id > maxId) maxId = val.id;
-    });
+
     let list = {
-      name: listInputRef.current.value,
+      title: listInputRef.current.value,
       color: colorMap.current[colorIndex],
-      new: 0,
-      id: maxId + 1,
     };
     let arr = [...lists.value];
-    arr.push(list);
-    //setTimeout(() => setCreate(false), 100)
-    listInputRef.current.value = "";
-    lists.value = arr;
+    //console.log(JSON.stringify(list));
+    fetch("http://localhost:9090/api/v1/user/tasklists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic " + btoa(credentials.value.login + ":" + credentials.value.password),
+      },
+      body: JSON.stringify(list),
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          authed.value=false;
+          return null;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        //console.log(arr)
+        arr.push(data.taskList);
+        listInputRef.current.value = "";
+        lists.value = arr;
+      });
   };
 
   const getLists = () => {
@@ -88,10 +106,10 @@ export default function ListsBar() {
 
   return (
     <>
-      <div className="mb-1 mt-3 px-3 text-[0.5rem] font-bold uppercase opacity-60">
+      <div className="mb-1 mt-3 px-3 text-[0.75rem] font-bold uppercase opacity-60">
         Lists
       </div>
-      <div className="flex flex-col gap-0.5 px-3 text-[0.55rem]">
+      <div className="flex flex-col gap-0.5 px-3 text-[0.75rem]">
         {getLists()}
         <div
           className={`group flex cursor-pointer flex-row items-center gap-1  rounded-md
@@ -99,7 +117,9 @@ export default function ListsBar() {
           onClick={() => setCreate((prev) => !prev)}
         >
           <div className="relative mx-1 flex aspect-square w-3 scale-[200%] text-center font-bold">
-            <div className="absolute -top-[12.5%] left-[25%] opacity-50">+</div>
+            <div className="absolute -top-[30.5%] left-[20%] scale-[1] opacity-50">
+              +
+            </div>
           </div>
           <div className="">Add New List</div>
         </div>

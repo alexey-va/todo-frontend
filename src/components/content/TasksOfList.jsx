@@ -6,13 +6,15 @@ import { changeComplete, getAddList } from "../../myutils/Utils.jsx";
 
 export default function TasksOfList({ listId }) {
 
+
   let list = lists.value.find(i => i.id === listId)
-  if(list === null) return <>Error</>;
+  console.log(typeof lists.value)
+  if(list === null || list == undefined) list = []
 
   return (
     <div className="relative flex h-full flex-col px-4">
       <div className="flex h-[8%] flex-row items-center gap-4 pb-2 text-[1.75rem] font-semibold">
-        <div className="">{list.title}</div>
+        <div className="">{list.title ? list.title : "Error in name"}</div>
 
         {tasksNew.value.upcoming > 0 ? (
           <NewCounter

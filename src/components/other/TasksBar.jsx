@@ -12,7 +12,7 @@ export default function TasksBar() {
       <div className="mb-1 mt-3 px-3 text-[0.5rem] font-bold uppercase opacity-60">
         Tasks
       </div>
-      <div className="flex flex-col gap-0.5 px-3 text-[0.55rem]">
+      <div className="flex flex-col gap-0.5 px-3 text-[0.75rem]">
         <div
           className={`${
             selectedSection.value.group === "tasks" &&

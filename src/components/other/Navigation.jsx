@@ -3,11 +3,11 @@ import search from "../../assets/icons8-search.svg";
 export default function Navigation() {
   return (
     <>
-      <div className="relative flex justify-between px-3 text-[0.9rem] font-semibold">
+      <div className="relative flex justify-between px-3 text-[1.1rem] font-semibold">
         <div className="">Menu</div>
       </div>
 
-      <div className="flex px-3 py-0.5 pb-0 text-[0.6rem]">
+      <div className="flex px-3 py-0.5 pb-0 text-[0.8rem]">
         <div className="relative w-full">
           <img
             className="absolute left-[5.5%] top-[33%] w-3.5 opacity-50"

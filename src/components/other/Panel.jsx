@@ -3,7 +3,7 @@ import TasksBar from "./TasksBar.jsx";
 import ListsBar from "./ListsBar.jsx";
 import Tags from "./Tags.jsx";
 import { useState } from "react";
-import { searchTags } from "../../Signals.jsx";
+import { authed, searchTags } from "../../Signals.jsx";
 
 export default function Panel() {
   const [burger, setBurger] = useState(false);
@@ -66,6 +66,15 @@ export default function Panel() {
               setParentTags={setSearchTags}
             />
           </div>
+        </div>
+        <div className={`mt-auto px-2 ${burger ? "invisible" : "" }`}>
+          <button
+            className="mt-auto flex w-full items-center justify-center rounded-md
+            bg-red-400 py-1 text-white"
+            onClick={() => authed.value = false}
+          >
+            Выйти
+          </button>
         </div>
       </div>
     </>

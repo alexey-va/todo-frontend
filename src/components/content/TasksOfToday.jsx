@@ -1,6 +1,6 @@
 import Tasks from "./Tasks.jsx";
 import { tasksNew } from "../../Signals.jsx";
-import { changeComplete, getAddList } from "../../myutils/Utils.jsx";
+import { changeComplete, getAddList, sameDay } from "../../myutils/Utils.jsx";
 import NewCounter from "../other/NewCounter.jsx";
 
 export default function TasksOfToday() {
@@ -17,7 +17,7 @@ export default function TasksOfToday() {
         />
       </div>
       <div className="grid grid-rows-1 grid-cols-1 h-full w-full no-scrollbar gap-4">
-        <Tasks changeComplete={changeComplete} getAddList={getAddList} predicate={(value) => value.upcoming === 0}/>
+        <Tasks changeComplete={changeComplete} getAddList={getAddList} predicate={(value) => sameDay(new Date(), new Date(value.startDate))}/>
       </div>
     </div>
   );

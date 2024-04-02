@@ -12,7 +12,7 @@ export function StickerWall() {
 
   const createNewSticker = () => {
     editedSticker.value={
-      type: "edit", title: "", text: "", color: "#fff1f1", tags: []
+      type: "create", title: "", text: "", color: null, tags: []
     }
   }
 
