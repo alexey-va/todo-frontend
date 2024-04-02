@@ -125,7 +125,7 @@ export default function Calendar() {
 
   return (
     <>
-      <div className="relative flex h-full flex-col pl-4 " ref={parent}>
+      <div className="relative flex h-full flex-col pl-4 max-sm:px-2" ref={parent}>
         <div className="flex h-[10%] flex-col font-semibold max-sm:h-[7.5%]  max-xs:h-[7.5%]">
           <div className="flex flex-row items-center justify-between">
             <div className="text-[1.75rem] max-sm:text-[1.0rem] max-xs:text-[0.8rem] ">
@@ -136,12 +136,12 @@ export default function Calendar() {
                 new Date().getFullYear()}
             </div>
 
-            <div
+{/*            <div
               className="cursor-pointer scroll-smooth rounded-md border-[1px] px-2 py-1 text-[0.7rem]"
               onClick={() => move(true)}
             >
               scroll
-            </div>
+            </div>*/}
           </div>
 
           <div className="pl-[0rem] text-sm text-gray-700/40">

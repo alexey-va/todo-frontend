@@ -12,7 +12,7 @@ export default function TasksOfList({ listId }) {
   if(list === null || list == undefined) list = []
 
   return (
-    <div className="relative flex h-full flex-col px-4">
+    <div className="relative flex h-full flex-col px-4 max-sm:px-2">
       <div className="flex h-[8%] flex-row items-center gap-4 pb-2 text-[1.75rem] font-semibold">
         <div className="">{list.title ? list.title : "Error in name"}</div>
 

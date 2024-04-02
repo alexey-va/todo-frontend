@@ -68,8 +68,8 @@ export default function TaskEditor() {
         +
       </div>
       <input
-        className="relative w-full rounded-[4px] border px-2 py-1.5 pl-7 text-[1rem] outline-0
-              max-sm:text-[0.85rem]"
+        className="relative rounded-[4px] border px-2 py-1.5 pl-7 text-[1rem] outline-0
+              max-sm:text-[0.85rem] w-full"
         placeholder={`Add task`}
         onChange={(e) => setTitle(e.target.value)}
       ></input>

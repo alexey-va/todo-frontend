@@ -167,9 +167,9 @@ export default function Tasks({
                   <div
                     className={`${
                       selectedTask === value.id
-                        ? "h-full"
-                        : "pointer-events-none h-0 opacity-0"
-                    } transition-all`}
+                        ? ""
+                        : "pointer-events-none hidden opacity-0"
+                    } transition-all `}
                   >
                     <div className="mt-2 flex flex-col gap-2 text-sm">
                       <div className="grid grid-cols-2 gap-2 rounded-md bg-gray-100 p-2">
