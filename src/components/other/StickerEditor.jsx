@@ -35,7 +35,7 @@ export default function StickerEditor() {
       credentials.value.password,
     );
 
-    fetch("http://localhost:9090/api/v1/user/stickers", {
+    fetch("https://todo-back.alexeyav.ru/api/v1/user/stickers", {
       method: editedSticker.value.type === "edit" ? "PUT" : "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export default function StickerEditor() {
 
   const handleDelete = () => {
     fetch(
-      `http://localhost:9090/api/v1/users/test/stickers?local_id=${editedSticker.value.id}`,
+      `https://todo-back.alexeyav.ru/api/v1/users/test/stickers?local_id=${editedSticker.value.id}`,
       {
         method: "DELETE",
       },

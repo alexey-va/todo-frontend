@@ -44,7 +44,7 @@ export default function ListsBar() {
     };
     let arr = [...lists.value];
     //console.log(JSON.stringify(list));
-    fetch("http://localhost:9090/api/v1/user/tasklists", {
+    fetch("https://todo-back.alexeyav.ru/api/v1/user/tasklists", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

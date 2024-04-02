@@ -21,7 +21,7 @@ export default function Tasks({
 
   const handleTaskComplete = (id) => {
     //console.log("Update "+id)
-    fetch("http://localhost:9090/api/v1/user/tasks", {
+    fetch("https://todo-back.alexeyav.ru/api/v1/user/tasks", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export default function Tasks({
     let serializedStart = serializeDate(startDateTime);
     let serializedEnd = serializeDate(endDateTime);
 
-    fetch(`http://localhost:9090/api/v1/user/tasks?task_list=${list}`, {
+    fetch(`https://todo-back.alexeyav.ru/api/v1/user/tasks?task_list=${list}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

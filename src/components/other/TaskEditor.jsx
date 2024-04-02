@@ -30,7 +30,7 @@ export default function TaskEditor() {
     const list = document.querySelector("#list").value;
     const upcoming = 0;
 
-    fetch(`http://localhost:9090/api/v1/user/tasks?task_list=${list}`, {
+    fetch(`https://todo-back.alexeyav.ru/api/v1/user/tasks?task_list=${list}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

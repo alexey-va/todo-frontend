@@ -22,7 +22,7 @@ export default function Login({ loadData }) {
     let login = document.getElementById("login").value;
     let password = document.getElementById("password").value;
 
-    fetch("http://localhost:9090/api/v1/register", {
+    fetch("https://todo-back.alexeyav.ru/api/v1/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -29,7 +29,7 @@ export default function App() {
 
   const loadData = () => {
     console.log("credentials", credentials.value.login, credentials.value.password)
-    return fetch("http://localhost:9090/api/v1/user", {
+    return fetch("https://todo-back.alexeyav.ru/api/v1/user", {
       method: "GET",
       headers: {
         "Authorization": "Basic " + btoa(credentials.value.login + ":" + credentials.value.password),
