@@ -25,18 +25,25 @@ export const changeComplete = (checked, id) => {
   allTasks.value = arr;
 };
 
+export const fromTimestamp = (timestamp) => {
+  return new Date(timestamp*1000);
+}
+
 export const sameDay = (d1, d2) => {
-  //console.log(d1+" "+d2)
-  if (!d1 || !d2) return false;
+  //console.log(d1,d2)
+  let date1 = new Date(d1*1000);
+  let date2 = new Date(d2*1000);
+  if (!date1 || !date2) return false;
   return (
-    d1.toISOString().substring(0, 10) === d2.toISOString().substring(0, 10)
+    date1.toISOString().substring(0, 10) === date2.toISOString().substring(0, 10)
   );
 };
 
 export const isForToday = (task) => {
   const today = new Date();
+  let taskDate = new Date(task.startDate*1000);
   let isSameDay =
-    today.toISOString().substring(0, 10) === task.startDate.substring(0, 10);
+    today.toISOString().substring(0, 10) === taskDate.toISOString().substring(0, 10);
 
   return isSameDay;
 };
@@ -45,14 +52,9 @@ export const isForTomorrow = (task) => {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
-  /*    console.log(tomorrow.toISOString().substring(0, 10));
-      console.log(task.startDate.substring(0, 10));
-      console.log(
-        tomorrow.toISOString().substring(0, 10) ===
-          task.startDate.substring(0, 10),
-      );*/
+  let taskDate = new Date(task.startDate*1000);
   return (
-    tomorrow.toISOString().substring(0, 10) === task.startDate.substring(0, 10)
+    tomorrow.toISOString().substring(0, 10) === taskDate.toISOString().substring(0, 10)
   );
 };
 
@@ -65,33 +67,16 @@ export const isForNextWeek = (task) => {
 
   const endOfNextWeek = new Date(nextWeek);
   endOfNextWeek.setDate(endOfNextWeek.getDate() + 7);
+  let taskDate = new Date(task.startDate*1000);
 
   let isNextWeek =
-    new Date(task.startDate) >= nextWeek &&
-    new Date(task.startDate) < endOfNextWeek;
-
+    taskDate >= nextWeek &&
+    taskDate < endOfNextWeek;
   return isNextWeek;
 };
 
 export const serializeDate = (date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() is zero-based
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
-
-  // Calculate the timezone offset
-  const offset = -date.getTimezoneOffset();
-  const offsetSign = offset >= 0 ? "+" : "-";
-  const offsetHours = String(Math.floor(Math.abs(offset) / 60)).padStart(
-    2,
-    "0",
-  );
-  const offsetMinutes = String(Math.abs(offset) % 60).padStart(2, "0");
-
-  // Combine everything into the final string
-  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${offsetSign}${offsetHours}:${offsetMinutes}`;
+  return date.getTime();
 };
 
 export const getAddList = (value) => {
@@ -102,7 +87,8 @@ export const getAddList = (value) => {
   }
 
   let today = new Date();
-  let endDate = new Date(value.endDate);
+  let endDate = new Date(value.endDate*1000);
+  //console.log("Today: ", today, "End: ", value.endDate);
   let isStale = today > endDate;
 
   return (

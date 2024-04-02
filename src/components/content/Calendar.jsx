@@ -33,7 +33,7 @@ export default function Calendar() {
       obj.pointer = -1;
       calendarScroll.value = obj;
     }
-    console.log(calendarScroll.value.pointer);
+    ///console.log(calendarScroll.value.pointer);
   };
 
   const move = (smooth) => {
@@ -55,8 +55,10 @@ export default function Calendar() {
   const getTaskStack = () => {
     let stack = [];
     return allTasks.value.map((value) => {
-      let d1 = new Date(Date.parse(value.startDate));
-      let d2 = new Date(Date.parse(value.endDate));
+      let d1 = new Date(value.startDate*1000);
+      let d2 = new Date(value.endDate*1000);
+      //console.log(d1, d2);
+      //console.log(value.startDate, value.endDate);
       //console.log(!sameDay(d1, new Date()), d1, new Date());
       //console.log((!sameDay(d2, new Date())), d2, new Date())
       //if (!sameDay(d1, new Date())) return "";
@@ -74,7 +76,7 @@ export default function Calendar() {
       let color = "#69f369";
       if (value.list !== undefined) {
         let list = lists.value.find((i) => i.id === value.list);
-        console.log(value.list);
+        //console.log(value.list);
         if (list !== null) color = list.color;
       }
       let offset = 0;

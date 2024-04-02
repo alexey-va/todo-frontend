@@ -7,7 +7,7 @@ import {
 } from "../../Signals.jsx";
 import { useState } from "react";
 import TaskEditor from "../other/TaskEditor.jsx";
-import { serializeDate } from "../../myutils/Utils.jsx";
+import { fromTimestamp, serializeDate } from "../../myutils/Utils.jsx";
 
 export default function Tasks({
   changeComplete,
@@ -62,7 +62,7 @@ export default function Tasks({
     setSelectedTask(selectedTask === id ? -1 : id);
   };
 
-  function handleTaskChange(id) {
+  function handleTaskChange(id, isDelete) {
     let start = document.getElementById(`start${id}`).value;
     let end = document.getElementById(`end${id}`).value;
     let list = document.getElementById(`list${id}`).value;
@@ -75,7 +75,7 @@ export default function Tasks({
     let serializedEnd = serializeDate(endDateTime);
 
     fetch(`https://todo-back.alexeyav.ru/api/v1/user/tasks?task_list=${list}`, {
-      method: "PUT",
+      method: isDelete ? "DELETE" : "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization:
@@ -196,7 +196,7 @@ export default function Tasks({
                           id={`start${value.id}`}
                           className="rounded-md p-1 px-2"
                           type="datetime-local"
-                          defaultValue={value.startDate.substring(0, 16)}
+                          defaultValue={fromTimestamp(value.startDate).toISOString().substring(0, 16)}
                         />
 
                         <label
@@ -209,7 +209,7 @@ export default function Tasks({
                           id={`end${value.id}`}
                           className="rounded-md p-1 px-2"
                           type="datetime-local"
-                          defaultValue={value.endDate.substring(0, 16)}
+                          defaultValue={fromTimestamp(value.endDate).toISOString().substring(0, 16)}
                         />
 
                         <label
@@ -235,9 +235,15 @@ export default function Tasks({
                       </div>
                       <button
                         className="rounded-md bg-blue-500 px-2 py-1 text-lg text-white"
-                        onClick={() => handleTaskChange(value.id)}
+                        onClick={() => handleTaskChange(value.id, false)}
                       >
                         Изменить
+                      </button>
+                      <button
+                        className="rounded-md bg-red-500 px-2 py-1 text-lg text-white"
+                        onClick={() => handleTaskChange(value.id, true)}
+                      >
+                        Удалить
                       </button>
                     </div>
                   </div>

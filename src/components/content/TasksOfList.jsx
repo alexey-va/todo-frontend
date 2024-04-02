@@ -8,8 +8,9 @@ export default function TasksOfList({ listId }) {
 
 
   let list = lists.value.find(i => i.id === listId)
-  console.log(typeof lists.value)
+  //console.log(typeof lists.value)
   if(list === null || list == undefined) list = []
+
 
   return (
     <div className="relative flex h-full flex-col px-4 max-sm:px-2">

@@ -67,17 +67,19 @@ export default function Login({ loadData }) {
             className={`col-span-2 h-[2rem] w-[10rem] rounded-md border bg-gray-100 px-2
             ${incorrect ? "border-red-500" : "border-gray-100"}`}
             placeholder="test"
+            defaultValue={credentials.value.login ? credentials.value.login : ""}
           />
 
           <label htmlFor="login" className="text-lg font-semibold">
             Пароль
           </label>
           <input
-            type="text"
+            type="password"
             id="password"
             className={`col-span-2 h-[2rem] w-[10rem] rounded-md border bg-gray-100 px-2
             ${incorrect ? "border-red-500" : "border-gray-100"}`}
             placeholder="123"
+            defaultValue={credentials.value.password ? credentials.value.password : ""}
           />
 
           <button
