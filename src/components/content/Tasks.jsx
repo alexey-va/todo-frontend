@@ -1,9 +1,10 @@
 import {
-  allTasks, authed,
+  allTasks,
+  authed,
   credentials,
   editedSticker,
   lists,
-  stickers
+  stickers,
 } from "../../Signals.jsx";
 import { useState } from "react";
 import TaskEditor from "../other/TaskEditor.jsx";
@@ -36,7 +37,7 @@ export default function Tasks({
     })
       .then((response) => {
         if (response.status === 401) {
-          authed.value=false;
+          authed.value = false;
           return null;
         }
         return response.json();
@@ -94,23 +95,27 @@ export default function Tasks({
     })
       .then((response) => {
         if (response.status === 401) {
-          authed.value=false;
+          authed.value = false;
           return null;
         }
         return response.json();
       })
       .then((data) => {
-        let task = data.task;
-        let result = [...allTasks.value];
-        console.log(data);
-        for (let i = 0; i < result.length; i++) {
-          if (result[i].id === task.id) {
-            result[i] = task;
-            break;
+        if (isDelete) {
+          let tasks = data.tasks;
+          allTasks.value = tasks.sort((a, b) => a.id - b.id);
+        } else {
+          let task = data.task;
+          let result = [...allTasks.value];
+          //console.log(data);
+          for (let i = 0; i < result.length; i++) {
+            if (result[i].id === task.id) {
+              result[i] = task;
+              break;
+            }
           }
+          allTasks.value = result.sort((a, b) => a.id - b.id);
         }
-
-        allTasks.value = result.sort((a, b) => a.id - b.id);
       });
   }
 
@@ -196,7 +201,9 @@ export default function Tasks({
                           id={`start${value.id}`}
                           className="rounded-md p-1 px-2"
                           type="datetime-local"
-                          defaultValue={fromTimestamp(value.startDate).toISOString().substring(0, 16)}
+                          defaultValue={fromTimestamp(value.startDate)
+                            .toISOString()
+                            .substring(0, 16)}
                         />
 
                         <label
@@ -209,7 +216,9 @@ export default function Tasks({
                           id={`end${value.id}`}
                           className="rounded-md p-1 px-2"
                           type="datetime-local"
-                          defaultValue={fromTimestamp(value.endDate).toISOString().substring(0, 16)}
+                          defaultValue={fromTimestamp(value.endDate)
+                            .toISOString()
+                            .substring(0, 16)}
                         />
 
                         <label

@@ -88,7 +88,7 @@ export const getAddList = (value) => {
   }
 
   let today = new Date();
-  let endDate = new Date(value.endDate*1000);
+  let endDate = fromTimestamp(value.endDate);
   //console.log("Today: ", today, "End: ", value.endDate);
   let isStale = today > endDate;
 
@@ -100,7 +100,7 @@ export const getAddList = (value) => {
           <div className="flex flex-row content-center items-center justify-center">
             <img src={dueDate} alt="" className="mr-1 w-[9px]" />
             <div className="">
-              {new Date(Date.parse(value.endDate))
+              {fromTimestamp(value.endDate)
                 .toLocaleDateString("pl", {
                   day: "numeric",
                   month: "numeric",
