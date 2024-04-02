@@ -1,4 +1,4 @@
-import { hexToRgb, sameDay, toPix } from "../../myutils/Utils.jsx";
+import { fromTimestamp, hexToRgb, sameDay, toPix } from "../../myutils/Utils.jsx";
 import { useEffect, useRef } from "react";
 import { allTasks, calendarScroll, lists } from "../../Signals.jsx";
 import CalendarScroller from "../other/CalendarScroller.jsx";
@@ -55,9 +55,12 @@ export default function Calendar() {
   const getTaskStack = () => {
     let stack = [];
     return allTasks.value.map((value) => {
-      let d1 = new Date(value.startDate*1000);
-      let d2 = new Date(value.endDate*1000);
-      //console.log(d1, d2);
+      let d1 = fromTimestamp(value.startDate);
+      let d2 = fromTimestamp(value.endDate);
+      let duration = d2 - d1;
+
+      //console.log(d1.toISOString(), d2.toISOString(), duration/1000/60/60);
+
       //console.log(value.startDate, value.endDate);
       //console.log(!sameDay(d1, new Date()), d1, new Date());
       //console.log((!sameDay(d2, new Date())), d2, new Date())
@@ -65,13 +68,9 @@ export default function Calendar() {
       //if (!sameDay(d2, new Date())) return "";
       let margin = !sameDay(d1, new Date()) ? 0
         : (d1.getHours() + d1.getMinutes() / 60.0) * 4;
-      let height = !sameDay(new Date(), d2)
-        ? (24 - d1.getHours() - d1.getMinutes() / 60.0) * 4
-        : (d2.getHours() +
-            d2.getMinutes() / 60.0 -
-            d1.getHours() -
-            d1.getMinutes() / 60.0) *
-          4;
+      let height = sameDay(new Date(), d2)
+        ? duration / 1000 / 60 / 60 * 4
+        : (24 - d1.getHours() - d1.getMinutes() / 60.0) * 4;
 
       let color = "#69f369";
       if (value.list !== undefined) {
@@ -86,22 +85,28 @@ export default function Calendar() {
           if (margin - val[0] < 1.5) {
             margin += 1.2;
             height -= 1.2;
+            rightOffset++;
           }
           offset++;
-          if (margin + height <= val[1]) rightOffset++;
+          //if (margin + height <= val[1])
         }
       });
 
-      stack.push([margin, margin + height]);
+
+      //console.log(margin, margin+height);
+      let bottom = Math.min(margin + height, 25 * 4);
+      let onTheBottom = bottom === 25 * 4;
+
+      stack.push([margin, bottom]);
       //console.log(diff+" "+value.id)
       return (
         <div
           key={value.id}
-          className="absolute z-10 flex h-[3rem] flex-row overflow-hidden rounded-md bg-green-100
-           mix-blend-multiply"
+          className={`absolute z-10 flex h-[3rem] flex-row overflow-hidden rounded-md bg-green-100
+            mix-blend-multiply ${onTheBottom ? "rounded-b-none" : ""}`}
           style={{
             marginTop: margin + `rem`,
-            height: height + "rem",
+            height: (bottom-margin) + "rem",
             marginLeft: offset / 2 + "rem",
             marginRight: rightOffset / 4 + "rem",
             width: `calc(100% - ${offset / 2 + rightOffset / 4}rem)`,
@@ -172,7 +177,7 @@ export default function Calendar() {
             className="absolute left-[3.7rem] z-[1] h-[0.5px] w-[calc(100%-3.7rem)] bg-black"
             style={{ top: offset + 0.2 + "rem" }}
           ></div>
-          {[...Array(24).keys()].map((value) => {
+          {[...Array(25).keys()].map((value) => {
             return (
               <div key={value} className=" relative flex flex-row">
                 {value === 0 ? "" : <hr className="absolute w-full" />}

@@ -1,43 +1,67 @@
 import { computed, effect, signal } from "@preact/signals-react";
 
-// INTERNAL STATE
+function isDataStale() {
+  const lastUpdatedString = localStorage.getItem("lastUpdated");
+  if (!lastUpdatedString) {
+    return true;
+  }
+
+  const lastUpdated = new Date(lastUpdatedString);
+  const thirtyMinutesAgo = new Date();
+  thirtyMinutesAgo.setMinutes(thirtyMinutesAgo.getMinutes() - 30);
+
+  return lastUpdated < thirtyMinutesAgo;
+}
+
+function getSignalFromLocalStorage(signalKey, defaultValue) {
+  if (isDataStale()) {
+    // If the data is considered stale, remove all items to start fresh
+    localStorage.clear();
+    return defaultValue;
+  }
+
+  const storedValueString = localStorage.getItem(signalKey);
+  return storedValueString !== null ? JSON.parse(storedValueString) : defaultValue;
+}
+
+// Update the lastUpdated timestamp whenever data is saved
+function updateLastUpdated() {
+  localStorage.setItem("lastUpdated", new Date().toISOString());
+}
+
+// INTERNAL STATE - Adjusting the initialization to use getSignalFromLocalStorage and checking for stale data
 export const editedSticker = signal({ type: "none" });
 export const searchTags = signal(
-  localStorage.getItem("searchTags") !== null ? { tags: [] } : { tags: [] },
+  getSignalFromLocalStorage("searchTags", { tags: [] }),
 );
 export const selectedSection = signal(
-  localStorage.getItem("selectedSection") !== null
-    ? JSON.parse(localStorage.getItem("selectedSection"))
-    : { group: "tasks", id: 3 },
+  getSignalFromLocalStorage("selectedSection", { group: "tasks", id: 3 }),
 );
-
 export const authed = signal(
-  localStorage.getItem("authed") === "true" || false,
+  getSignalFromLocalStorage("authed", false),
 );
-
 export const credentials = signal(
-  localStorage.getItem("credentials") !== null
-    ? JSON.parse(localStorage.getItem("credentials"))
-    : { login: "", password: "" },
+  getSignalFromLocalStorage("credentials", { login: "", password: "" }),
 );
 
 {
-  effect(() =>
-    localStorage.setItem("searchTags", JSON.stringify(searchTags.value.tags)),
-  );
-
-  effect(() =>
-    localStorage.setItem(
-      "selectedSection",
-      JSON.stringify(selectedSection.value),
-    ),
-  );
+  effect(() => {
+    localStorage.setItem("searchTags", JSON.stringify(searchTags.value));
+    updateLastUpdated();
+  });
 
   effect(() => {
-    localStorage.setItem("authed", authed.value);
+    localStorage.setItem("selectedSection", JSON.stringify(selectedSection.value));
+    updateLastUpdated();
+  });
+
+  effect(() => {
+    localStorage.setItem("authed", JSON.stringify(authed.value));
     localStorage.setItem("credentials", JSON.stringify(credentials.value));
+    updateLastUpdated();
   });
 }
+
 
 export const tasksNew = computed(() => {
   let obj = {};

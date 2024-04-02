@@ -31,8 +31,9 @@ export const fromTimestamp = (timestamp) => {
 
 export const sameDay = (d1, d2) => {
   //console.log(d1,d2)
-  let date1 = new Date(d1*1000);
-  let date2 = new Date(d2*1000);
+  // check if d1 and d2 are timestamps and convert them to Date objects if necessary
+  let date1 = typeof d1 === "number" ? new Date(d1*1000) : d1;
+  let date2 = typeof d2 === "number" ? new Date(d2*1000) : d2;
   if (!date1 || !date2) return false;
   return (
     date1.toISOString().substring(0, 10) === date2.toISOString().substring(0, 10)
