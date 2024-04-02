@@ -66,7 +66,7 @@ export default function Login({ loadData }) {
             id="login"
             className={`col-span-2 h-[2rem] w-[10rem] rounded-md border bg-gray-100 px-2
             ${incorrect ? "border-red-500" : "border-gray-100"}`}
-            placeholder="Что угодно"
+            placeholder="test"
           />
 
           <label htmlFor="login" className="text-lg font-semibold">
@@ -77,7 +77,7 @@ export default function Login({ loadData }) {
             id="password"
             className={`col-span-2 h-[2rem] w-[10rem] rounded-md border bg-gray-100 px-2
             ${incorrect ? "border-red-500" : "border-gray-100"}`}
-            placeholder="что угодно"
+            placeholder="123"
           />
 
           <button
