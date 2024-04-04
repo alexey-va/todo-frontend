@@ -59,11 +59,14 @@ export default function Calendar() {
       let d2 = fromTimestamp(value.endDate);
       let duration = d2 - d1;
 
+
+      let isListExists = lists.value.find((i) => i.id === value.list);
+      if (!isListExists) return "";
       //console.log(d1.toISOString(), d2.toISOString(), duration/1000/60/60);
 
       //console.log(value.startDate, value.endDate);
       //console.log(!sameDay(d1, new Date()), d1, new Date());
-      //console.log((!sameDay(d2, new Date())), d2, new Date())
+      //console.log((!sameDay(d2, new Date()) ), d2, new Date())
       //if (!sameDay(d1, new Date())) return "";
       //if (!sameDay(d2, new Date())) return "";
       let margin = !sameDay(d1, new Date()) ? 0
@@ -76,7 +79,8 @@ export default function Calendar() {
       if (value.list !== undefined) {
         let list = lists.value.find((i) => i.id === value.list);
         //console.log(value.list);
-        if (list !== null) color = list.color;
+        if (list !== null && list !== undefined) color = list.color;
+        else color = "#69f369";
       }
       let offset = 0;
       let rightOffset = 0;

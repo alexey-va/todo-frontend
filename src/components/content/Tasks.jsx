@@ -137,6 +137,8 @@ export default function Tasks({
           <div className="no-scrollbar overflow-y-scroll">
             {allTasks.value.map((value) => {
               if (!predicate(value)) return "";
+              let isListExists = lists.value.find((i) => i.id === value.list);
+              if (!isListExists) return "";
               let hr = seen;
               seen = true;
               return (

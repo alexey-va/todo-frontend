@@ -70,9 +70,13 @@ export default function StickerEditor() {
 
   const handleDelete = () => {
     fetch(
-      `https://todo-back.alexeyav.ru/api/v1/users/test/stickers?local_id=${editedSticker.value.id}`,
+      `https://todo-back.alexeyav.ru/api/v1/user/stickers?local_id=${editedSticker.value.id}`,
       {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Basic " + btoa(credentials.value.login + ":" + credentials.value.password),
+        },
       },
     )
       .then((response) => {
