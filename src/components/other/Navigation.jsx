@@ -1,10 +1,10 @@
 import search from "../../assets/icons8-search.svg";
 
-export default function Navigation() {
+export default function Navigation({burger}) {
   return (
     <>
-      <div className="relative flex justify-between px-3 text-[1.1rem] font-semibold">
-        <div className="">Menu</div>
+      <div className="relative flex justify-between px-3   text-[1.1rem] font-semibold">
+        <div className={`sm:ml-auto transition-all sm:mr-2 ${burger ? "opacity-0" : ""}`}>Menu</div>
       </div>
 
       <div className="flex px-3 py-0.5 pb-0 text-[0.8rem]">

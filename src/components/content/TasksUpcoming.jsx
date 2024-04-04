@@ -11,7 +11,7 @@ export default function TasksUpcoming() {
   return (
     <>
       <div className="relative flex h-full flex-col px-4 max-sm:px-2">
-        <div className="flex h-[8%] flex-row items-center gap-4 pb-2 text-[1.75rem] font-semibold">
+        <div className="flex flex-row items-center gap-4 pb-2 text-[1.75rem] font-semibold">
           <div className="">Upcoming</div>
           {tasksNew.value.upcoming > 0 ? (
             <NewCounter
@@ -38,7 +38,8 @@ export default function TasksUpcoming() {
             />
           </div>
 
-          <div className="col-span-full flex w-full flex-row justify-between gap-4 max-md:flex-col max-md:justify-start">
+          <div
+            className="col-span-full flex w-full flex-row justify-between gap-4 max-md:flex-col max-md:justify-start">
             <div className="w-full">
               {/*Tomorrow*/}
               <Tasks
