@@ -1,5 +1,5 @@
 import { credentials } from "./Signals.jsx";
-import hasNonLatin1  from "./Utils.jsx";
+import { hasNonLatin1 } from "./Utils.jsx";
 import { useState } from "react";
 
 export default function Login({ loadData }) {
