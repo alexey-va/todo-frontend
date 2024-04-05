@@ -47,7 +47,7 @@ export default function TasksOfList({ listId }) {
 
   return (
     <div className="relative flex h-full flex-col px-4 max-sm:px-2">
-      <div className="flex h-[8%] flex-row items-center gap-4 pb-2 text-[1.75rem] font-semibold">
+      <div className="flex flex-row items-center gap-4 pb-2 text-[1.75rem] font-semibold">
         <div className="">{list.title ? list.title : "Error in name"}</div>
 
         {tasksNew.value.upcoming > 0 ? (
@@ -59,9 +59,9 @@ export default function TasksOfList({ listId }) {
         ) : (
           ""
         )}
-        <div className="ml-auto">
+        <div className="sm:ml-auto self-center flex items-center">
           <button className="rounded-md bg-red-500 px-1 py-1 text-base text-white opacity-90"
-          onClick={() => handleListDelete(listId)}>
+                  onClick={() => handleListDelete(listId)}>
             Удалить
           </button>
         </div>

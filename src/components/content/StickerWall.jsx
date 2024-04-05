@@ -1,5 +1,5 @@
 import StickerEditor from "../other/StickerEditor.jsx";
-import {searchTags, editedSticker, stickers} from "../../Signals.jsx";
+import { searchTags, editedSticker, stickers, search } from "../../Signals.jsx";
 
 export function StickerWall() {
 
@@ -27,11 +27,12 @@ export function StickerWall() {
           <div className="grid h-max grid-cols-2 gap-3 p-2 max-md:grid-cols-2 max-sm:grid-cols-1">
             {stickers.value.map((value) => {
               let key = value.id
-              if (
-                searchTags.value.tags.length > 0 &&
-                !searchTags.value.tags.every((r) => value.tags.includes(r))
-              )
-                return "";
+              let tagNotMatch = searchTags.value.tags.length > 0 && !searchTags.value.tags.every((r) => value.tags.includes(r))
+              if (tagNotMatch) return "";
+
+              let ifSearchNotMatch = search.value.length > 0 && value.title.toLowerCase().indexOf(search.value.toLowerCase()) === -1;
+              if (ifSearchNotMatch) return "";
+
 
               return (
                 <div

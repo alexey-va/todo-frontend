@@ -1,9 +1,10 @@
 import search from "../../assets/icons8-search.svg";
+import * as Signals from "../../Signals.jsx";
 
 export default function Navigation({burger}) {
   return (
     <>
-      <div className="relative flex justify-between px-3   text-[1.1rem] font-semibold">
+      <div className="relative flex justify-between px-3 py-1   text-[1.1rem] font-semibold">
         <div className={`sm:ml-auto transition-all sm:mr-2 ${burger ? "opacity-0" : ""}`}>Menu</div>
       </div>
 
@@ -19,6 +20,7 @@ export default function Navigation({burger}) {
                             py-2 text-left indent-7 font-semibold opacity-50 outline-[1px]"
             type="text"
             placeholder="Search"
+            onChange={(e) => Signals.search.value = e.target.value}
           />
         </div>
       </div>

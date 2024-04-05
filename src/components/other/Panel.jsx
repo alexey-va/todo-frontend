@@ -18,9 +18,8 @@ export default function Panel() {
     <>
       {/* Burger button */}
       <div
-        className={`absolute transition-all right-6 top-4  ${
-          burger ? "sm:left-4 sm:top-4" : "sm:left-4 sm:top-4"
-        } top-4 z-[1000] h-[2rem] w-[1.4rem] cursor-pointer  max-sm:fixed`}
+        className={`absolute transition-all right-6 top-5 sm:top-5 sm:left-4
+         z-[1000] h-[2rem] w-[1.4rem] cursor-pointer  max-sm:fixed`}
         onClick={() => setBurger((o) => !o)}
       >
         <span

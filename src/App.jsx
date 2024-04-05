@@ -66,7 +66,7 @@ export default function App() {
         {authed.value ? (
           <div
             className="relative flex h-[90%] max-h-[60rem] w-[90%] min-w-[375px] max-w-5xl
-         flex-row rounded-2xl max-sm:rounded-none  bg-white max-sm:p-0 max-sm:pb-2 shadow-2xl max-sm:h-full max-sm:max-h-full max-sm:w-full"
+         flex-row rounded-2xl max-sm:rounded-none max-sm:pt-2  bg-white max-sm:p-0 max-sm:pb-2 shadow-2xl max-sm:h-full max-sm:max-h-full max-sm:w-full"
           >
             <Panel />
             <div className="w-full sm:px-2 sm:pl-2 sm:pt-2">{getComponent()}</div>

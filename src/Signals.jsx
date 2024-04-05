@@ -1,4 +1,5 @@
 import { computed, effect, signal } from "@preact/signals-react";
+import { isForToday } from "./myutils/Utils.jsx";
 
 function isDataStale() {
   const lastUpdatedString = localStorage.getItem("lastUpdated");
@@ -44,6 +45,10 @@ export const credentials = signal(
   getSignalFromLocalStorage("credentials", { login: "", password: "" }),
 );
 
+export const search = signal(
+  getSignalFromLocalStorage("search", "")
+);
+
 {
   effect(() => {
     localStorage.setItem("searchTags", JSON.stringify(searchTags.value));
@@ -66,11 +71,10 @@ export const credentials = signal(
 export const tasksNew = computed(() => {
   let obj = {};
   obj.today = allTasks.value
-    .filter((i) => i.upcoming === 0)
     .filter((i) => i.completed === false).length;
 
   obj.upcoming = allTasks.value
-    .filter((i) => i.upcoming === 0 || i.upcoming === 1 || i.upcoming === 2)
+    .filter(i => isForToday(i))
     .filter((i) => i.completed === false).length;
   return obj;
 });

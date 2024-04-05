@@ -3,8 +3,8 @@ import {
   authed,
   credentials,
   editedSticker,
-  lists,
-  stickers,
+  lists, search,
+  stickers
 } from "../../Signals.jsx";
 import { useState } from "react";
 import TaskEditor from "../other/TaskEditor.jsx";
@@ -137,8 +137,13 @@ export default function Tasks({
           <div className="no-scrollbar overflow-y-scroll">
             {allTasks.value.map((value) => {
               if (!predicate(value)) return "";
+
               let isListExists = lists.value.find((i) => i.id === value.list);
               if (!isListExists) return "";
+
+              let isSearchNotMatch = search.value.length > 0 && value.title.toLowerCase().indexOf(search.value.toLowerCase()) === -1;
+              if (isSearchNotMatch) return "";
+
               let hr = seen;
               seen = true;
               return (
@@ -244,18 +249,20 @@ export default function Tasks({
                           })}
                         </select>
                       </div>
+                      <div className="flex flex-row w-full justify-between gap-6">
                       <button
-                        className="rounded-md bg-blue-500 px-2 py-1 text-lg text-white"
+                        className="rounded-md bg-blue-500 px-2 py-1 text-lg text-white flex-grow"
                         onClick={() => handleTaskChange(value.id, false)}
                       >
                         Изменить
                       </button>
                       <button
-                        className="rounded-md bg-red-500 px-2 py-1 text-lg text-white"
+                        className="rounded-md bg-red-500 px-2 py-1 text-lg text-white flex-grow"
                         onClick={() => handleTaskChange(value.id, true)}
                       >
                         Удалить
                       </button>
+                      </div>
                     </div>
                   </div>
                 </div>
