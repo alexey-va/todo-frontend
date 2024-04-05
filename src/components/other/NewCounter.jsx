@@ -1,5 +1,4 @@
 export default function NewCounter({ count, width, fontSize }) {
-  console.log(count);
   if (count === undefined || count === null || count === 0) return "";
   return (
     <>

@@ -82,7 +82,7 @@ export default function TasksBar() {
             alt=""
             className="w-4 scale-[0.85] transform opacity-40"
           />
-          Calendar
+          Timetable
           <div
             className={`${
               selectedSection.value.group === "tasks" &&

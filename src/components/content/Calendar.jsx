@@ -137,7 +137,7 @@ export default function Calendar() {
   return (
     <>
       <div className="relative flex h-full flex-col pl-4 sm:pr-[0.96rem] max-sm:px-2" ref={parent}>
-        <div className="flex h-[8%] flex-col font-semibold max-sm:h-[7.5%]  max-xs:h-[7.5%]">
+        <div className="flex h-[8%] flex-col font-semibold max-sm:h-[4.5%]">
           <div className="flex flex-row items-center justify-between">
             <div className="text-[1.75rem] max-sm:text-[1.0rem] max-xs:text-[0.8rem] ">
               {new Date().getDate() +

@@ -2,7 +2,7 @@ import { allTasks, authed, credentials, lists } from "../../Signals.jsx";
 import { useState } from "react";
 import { serializeDate } from "../../myutils/Utils.jsx";
 
-export default function TaskEditor() {
+export default function TaskCreator({startDate, endDate}) {
 
   const now = new Date();
   now.setHours(now.getHours() + 3);

@@ -77,7 +77,7 @@ export const isForNextWeek = (task) => {
 };
 
 export const serializeDate = (date) => {
-  return date.getTime();
+  return date.getTime()/1000;
 };
 
 export const getAddList = (value) => {

@@ -42,7 +42,7 @@ export default function Panel() {
 
       <div
         className={`relative max-sm:absolute flex h-full origin-left  overflow-clip transition-all max-sm:z-[100] rounded-l-2xl
-      ${burger ? "sm:w-[2rem]" : "sm:w-[15rem] "}`}
+      ${burger ? "pointer-events-none sm:w-[2rem]" : "sm:w-[15rem] "}`}
       >
         <div
           className={`no-scrollbar h-full absolute flex transition-all overflow-x-clip  ${
