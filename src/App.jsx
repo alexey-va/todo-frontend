@@ -13,6 +13,7 @@ import Calendar from "./components/content/Calendar.jsx";
 import TasksOfList from "./components/content/TasksOfList.jsx";
 import { useEffect, useState } from "react";
 import Login from "./Login.jsx";
+import { hasNonLatin1 } from "./Utils.jsx";
 
 export default function App() {
 
@@ -28,7 +29,15 @@ export default function App() {
   };
 
   const loadData = () => {
-    console.log("credentials", credentials.value.login, credentials.value.password)
+    if(hasNonLatin1(credentials.value.login) || hasNonLatin1(credentials.value.password)) {
+      authed.value = false;
+      credentials.value = {
+        login: "",
+        password: "",
+      }
+      return false;
+    }
+    //console.log("credentials", credentials.value.login, credentials.value.password)
     return fetch("https://todo-back.alexeyav.ru/api/v1/user", {
       method: "GET",
       headers: {

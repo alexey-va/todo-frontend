@@ -1,5 +1,5 @@
-import { allTasks, lists } from "../Signals.jsx";
-import dueDate from "../assets/due-date.svg";
+import { allTasks, lists } from "./Signals.jsx";
+import dueDate from "./assets/due-date.svg";
 
 export function hexToRgb(hex) {
   let c;
@@ -31,6 +31,13 @@ export const fromTimestamp = (timestamp) => {
   //date = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
   //console.log("Offset: ", date.getTimezoneOffset());
   return date;
+}
+
+export const hasNonLatin1 = (str) => {
+  for (let i = 0; i < str.length; i++) {
+    if (str.charCodeAt(i) > 255) return true;
+  }
+  return false;
 }
 
 export const fromTimestampToStringWithouTZ = (timestamp) => {

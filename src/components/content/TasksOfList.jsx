@@ -9,7 +9,7 @@ import {
 
 import Tasks from "./Tasks.jsx";
 import NewCounter from "../other/NewCounter.jsx";
-import { changeComplete, getAddList } from "../../myutils/Utils.jsx";
+import { changeComplete, getAddList } from "../../Utils.jsx";
 
 export default function TasksOfList({ listId }) {
   let list = lists.value.find((i) => i.id === listId);

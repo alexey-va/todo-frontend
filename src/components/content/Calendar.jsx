@@ -1,4 +1,4 @@
-import { fromTimestamp, hexToRgb, sameDay, toPix } from "../../myutils/Utils.jsx";
+import { fromTimestamp, hexToRgb, sameDay, toPix } from "../../Utils.jsx";
 import { useEffect, useRef } from "react";
 import { allTasks, calendarScroll, lists } from "../../Signals.jsx";
 import CalendarScroller from "../other/CalendarScroller.jsx";

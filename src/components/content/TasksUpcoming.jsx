@@ -1,7 +1,7 @@
 import { tasksNew } from "../../Signals.jsx";
 import Tasks from "./Tasks.jsx";
 import NewCounter from "../other/NewCounter.jsx";
-import { changeComplete, getAddList, isForNextWeek, isForToday, isForTomorrow } from "../../myutils/Utils.jsx";
+import { changeComplete, getAddList, isForNextWeek, isForToday, isForTomorrow } from "../../Utils.jsx";
 
 export default function TasksUpcoming() {
   let seen = [false, false, false];

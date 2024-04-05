@@ -1,4 +1,5 @@
 import { credentials } from "./Signals.jsx";
+import hasNonLatin1  from "./Utils.jsx";
 import { useState } from "react";
 
 export default function Login({ loadData }) {
@@ -9,15 +10,10 @@ export default function Login({ loadData }) {
     errorPassword: false,
   });
 
-  const checkForNonLatin1 = (str) => {
-    for (let i = 0; i < str.length; i++) {
-      if (str.charCodeAt(i) > 255) return true;
-    }
-    return false;
-  }
+
   
   const handleLogin = () => {
-    if (checkForNonLatin1(document.getElementById("login").value) || checkForNonLatin1(document.getElementById("password").value)) {
+    if (hasNonLatin1(document.getElementById("login").value) || hasNonLatin1(document.getElementById("password").value)) {
       setError({
         errorLogin:  true,
         errorPassword: true,
@@ -48,7 +44,7 @@ export default function Login({ loadData }) {
   };
 
   const handleRegister = () => {
-    if (checkForNonLatin1(document.getElementById("login").value) || checkForNonLatin1(document.getElementById("password").value)) {
+    if (hasNonLatin1(document.getElementById("login").value) || hasNonLatin1(document.getElementById("password").value)) {
       setError({
         errorLogin:  true,
         errorPassword: true,

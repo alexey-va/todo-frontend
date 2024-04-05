@@ -1,6 +1,6 @@
 import Tasks from "./Tasks.jsx";
 import { tasksNew } from "../../Signals.jsx";
-import { changeComplete, getAddList, isForToday, sameDay } from "../../myutils/Utils.jsx";
+import { changeComplete, getAddList, isForToday, sameDay } from "../../Utils.jsx";
 import NewCounter from "../other/NewCounter.jsx";
 
 export default function TasksOfToday() {

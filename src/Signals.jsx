@@ -1,5 +1,5 @@
 import { computed, effect, signal } from "@preact/signals-react";
-import { isForToday } from "./myutils/Utils.jsx";
+import { isForToday } from "./Utils.jsx";
 
 function isDataStale() {
   const lastUpdatedString = localStorage.getItem("lastUpdated");
