@@ -1,10 +1,15 @@
 import { allTasks, authed, credentials, lists } from "../../Signals.jsx";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { serializeDate } from "../../myutils/Utils.jsx";
 
-export default function TaskCreator({startDate, endDate}) {
+export default function TaskCreator({startDate}) {
 
-  const now = new Date();
+  const [beginDateInput, setBeginDateInput] = useState();
+
+  const beginDateRef = useRef();
+  const endDateRef = useRef();
+  
+  const now = startDate ? startDate : new Date();
   now.setHours(now.getHours() + 3);
   // Format to match the datetime-local input requirements (YYYY-MM-DDTHH:mm)
   // toISOString() returns a time in UTC, so we create a new date object in the local timezone
@@ -13,22 +18,40 @@ export default function TaskCreator({startDate, endDate}) {
 
   const [title, setTitle] = useState("");
 
+  const handleEndDateChange = (e) => {
+    //console.log("Begin date: ", beginDateInput, "End date: ", e.target.value)
+    if(e.target.value < beginDateInput){
+      e.target.value = beginDateInput;
+    }
+  }
+
+  const hanleBeginDateChange = (e) => {
+    //console.log("Begin date: ", e.target.value, "End date: ", document.querySelector("#end").value)
+    if(e.target.value > document.querySelector("#end").value){
+      endDateRef.current.value = e.target.value;
+    }
+    setBeginDateInput(e.target.value)
+  }
+
   const handleCreateTask = () => {
-    const startInput = document.querySelector("#start").value;
-    const endInput = document.querySelector("#end").value;
+    const startInput = beginDateRef.current.value;
+    const endInput = endDateRef.current.value;
 
     let startDate = new Date(startInput);
     let endDate = new Date(endInput);
 
-    startDate.setHours(startDate.getHours() + 3);
-    endDate.setHours(endDate.getHours() + 3);
+    console.log("Start: ", startDate, "End: ", endDate);
+    
+
+    startDate.setHours(startDate.getHours());
+    endDate.setHours(endDate.getHours());
 
     const start = serializeDate(startDate);
     const end = serializeDate(endDate);
-    console.log("Start: ", start, "End: ", end);
 
     const list = document.querySelector("#list").value;
     const upcoming = 0;
+    setTitle("")
 
     fetch(`https://todo-back.alexeyav.ru/api/v1/user/tasks?task_list=${list}`, {
       method: "POST",
@@ -59,7 +82,7 @@ export default function TaskCreator({startDate, endDate}) {
         result.push(task);
         allTasks.value = result.sort((a, b) => a.id - b.id);
       });
-    setTitle("")
+
   };
 
   return (
@@ -71,6 +94,7 @@ export default function TaskCreator({startDate, endDate}) {
         className="relative rounded-[4px] border px-2 py-1.5 pl-7 text-[1rem] outline-0
               max-sm:text-[0.85rem] w-full"
         placeholder={`Add task`}
+        value={title}
         onChange={(e) => setTitle(e.target.value)}
       ></input>
       <div
@@ -85,10 +109,12 @@ export default function TaskCreator({startDate, endDate}) {
                 Время начала
               </label>
               <input
+                ref={beginDateRef}
                 id="start"
                 className="rounded-md p-1 px-2"
                 type="datetime-local"
                 defaultValue={nowString}
+                onChange={(e) => hanleBeginDateChange(e)}
               />
             </div>
             <div className="flex items-center justify-between px-1">
@@ -96,10 +122,13 @@ export default function TaskCreator({startDate, endDate}) {
                 Время окончания
               </label>
               <input
+                ref={endDateRef}
                 id="end"
                 className="rounded-md p-1 px-2"
                 type="datetime-local"
                 defaultValue={inOneHourString}
+                min={beginDateInput}
+                onChange={(e) => handleEndDateChange(e)}
               />
             </div>
             <div className="flex items-center justify-between px-1">

@@ -71,10 +71,13 @@ export const search = signal(
 export const tasksNew = computed(() => {
   let obj = {};
   obj.today = allTasks.value
+    .filter(i => isForToday(i))
+    .filter(i => lists.value.find((j) => j.id === i.list) !== undefined)
     .filter((i) => i.completed === false).length;
 
   obj.upcoming = allTasks.value
     .filter(i => isForToday(i))
+    .filter(i => lists.value.find((j) => j.id === i.list) !== undefined)
     .filter((i) => i.completed === false).length;
   return obj;
 });

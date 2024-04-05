@@ -2,22 +2,18 @@ import {
   allTasks,
   authed,
   credentials,
-  editedSticker,
   lists,
   search,
-  stickers,
 } from "../../Signals.jsx";
 import { useState } from "react";
 import TaskCreator from "../other/TaskCreator.jsx";
-import { fromTimestamp, serializeDate } from "../../myutils/Utils.jsx";
+import { fromTimestamp, fromTimestampToStringWithouTZ, serializeDate } from "../../myutils/Utils.jsx";
 
 export default function Tasks({
-  changeComplete,
   getAddList,
   predicate,
   title,
-  startDate,
-  endDate
+  startDate
 }) {
   let seen = false;
 
@@ -70,6 +66,7 @@ export default function Tasks({
     let start = document.getElementById(`start${id}`).value;
     let end = document.getElementById(`end${id}`).value;
     let list = document.getElementById(`list${id}`).value;
+    let newName = document.getElementById(`title${id}`).value;
     let startDateTime = new Date(start);
     let endDateTime = new Date(end);
     let upcoming = allTasks.value.find((i) => i.id === id).upcoming;
@@ -88,7 +85,7 @@ export default function Tasks({
       },
       body: JSON.stringify({
         id: id,
-        title: title,
+        title: newName,
         list: list,
         startDate: serializedStart,
         endDate: serializedEnd,
@@ -123,7 +120,7 @@ export default function Tasks({
   }
 
   return (
-    <div className="flex h-full w-full flex-col rounded-md border p-3 text-[1rem]">
+    <div className="flex h-full w-full flex-col overflow-scroll no-scrollbar rounded-md border p-3 text-[1rem]">
       {title ? (
         <>
           <div className="mb-2 text-[1.0rem] font-bold">{title}</div>
@@ -135,15 +132,13 @@ export default function Tasks({
       <div className="flex flex-row">
         <div className="flex flex-grow flex-col">
           <div className="relative mb-2">
-            <TaskCreator />
+            <TaskCreator startDate={startDate}/>
           </div>
           <div className="no-scrollbar overflow-y-scroll">
             {allTasks.value.map((value) => {
               if (!predicate(value)){
-                console.log("Predicate failed for ",value)
                 return "";
               }
-              console.log("Predicate passed for ",value);
 
               let isListExists = lists.value.find((i) => i.id === value.list);
               if (!isListExists) return "";
@@ -216,9 +211,7 @@ export default function Tasks({
                             id={`start${value.id}`}
                             className="rounded-md p-1 px-2"
                             type="datetime-local"
-                            defaultValue={fromTimestamp(value.startDate)
-                              .toISOString()
-                              .substring(0, 16)}
+                            defaultValue={fromTimestampToStringWithouTZ(value.startDate)}
                           />
 
                           <label
@@ -231,9 +224,7 @@ export default function Tasks({
                             id={`end${value.id}`}
                             className="rounded-md p-1 px-2"
                             type="datetime-local"
-                            defaultValue={fromTimestamp(value.endDate)
-                              .toISOString()
-                              .substring(0, 16)}
+                            defaultValue={fromTimestampToStringWithouTZ(value.endDate)}
                           />
 
                           <label

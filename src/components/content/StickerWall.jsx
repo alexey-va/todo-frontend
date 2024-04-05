@@ -18,7 +18,7 @@ export function StickerWall() {
 
   return (
     <>
-      <div className="relative flex h-full flex-col px-4 max-sm:px-2">
+      <div className="relative flex h-full flex-col px-4 max-sm:px-2  pb-4">
         <StickerEditor/>
         <div className="flex items-center pb-2 text-[1.75rem] font-semibold">
           <div className="">Sticky Wall</div>

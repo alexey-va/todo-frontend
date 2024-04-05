@@ -26,7 +26,17 @@ export const changeComplete = (checked, id) => {
 };
 
 export const fromTimestamp = (timestamp) => {
-  return new Date(timestamp*1000);
+  let date = new Date(timestamp*1000);
+  //console.log("Original: ", date)
+  //date = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  //console.log("Offset: ", date.getTimezoneOffset());
+  return date;
+}
+
+export const fromTimestampToStringWithouTZ = (timestamp) => {
+  let date = new Date(timestamp*1000);
+  date = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  return date.toISOString().substring(0, 16);
 }
 
 export const sameDay = (d1, d2) => {
@@ -61,6 +71,7 @@ export const isForTomorrow = (task) => {
 
 export const isForNextWeek = (task) => {
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
   const nextWeek = new Date(today);
 
   // get begginning of next week
@@ -70,10 +81,8 @@ export const isForNextWeek = (task) => {
   endOfNextWeek.setDate(endOfNextWeek.getDate() + 7);
   let taskDate = new Date(task.startDate*1000);
 
-  let isNextWeek =
-    taskDate >= nextWeek &&
+  return taskDate >= nextWeek &&
     taskDate < endOfNextWeek;
-  return isNextWeek;
 };
 
 export const serializeDate = (date) => {

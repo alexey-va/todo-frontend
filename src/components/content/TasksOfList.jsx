@@ -2,7 +2,7 @@ import {
   authed, credentials,
   editedSticker,
   lists,
-  listsNew,
+  listsNew, selectedSection,
   stickers,
   tasksNew
 } from "../../Signals.jsx";
@@ -42,11 +42,12 @@ export default function TasksOfList({ listId }) {
             lists.value = result.sort((a, b) => a.id - b.id);
           }
         }
+        selectedSection.value = { group: "tasks", id: 0 };
       });
   };
 
   return (
-    <div className="relative flex h-full flex-col px-4 max-sm:px-2">
+    <div className="relative flex h-full flex-col px-4 max-sm:px-2 pb-4">
       <div className="flex flex-row items-center gap-4 pb-2 text-[1.75rem] font-semibold">
         <div className="">{list.title ? list.title : "Error in name"}</div>
 
@@ -60,13 +61,13 @@ export default function TasksOfList({ listId }) {
           ""
         )}
         <div className="sm:ml-auto self-center flex items-center">
-          <button className="rounded-md bg-red-500 px-1 py-1 text-base text-white opacity-90"
+          <button className="rounded-md bg-red-500 px-2 py-1 text-base text-white opacity-90"
                   onClick={() => handleListDelete(listId)}>
             Удалить
           </button>
         </div>
       </div>
-      <div className="no-scrollbar grid h-[92%] w-full grid-cols-1 grid-rows-1 gap-4">
+      <div className="overflow-scroll no-scrollbar grid h-full w-full grid-cols-1 grid-rows-1 gap-4">
         <Tasks
           changeComplete={changeComplete}
           getAddList={getAddList}

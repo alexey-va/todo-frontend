@@ -5,7 +5,13 @@ import { changeComplete, getAddList, isForNextWeek, isForToday, isForTomorrow } 
 
 export default function TasksUpcoming() {
   let seen = [false, false, false];
+  let nexWeekMonday9AM = new Date();
+  nexWeekMonday9AM.setDate(nexWeekMonday9AM.getDate() + 8 - nexWeekMonday9AM.getDay());
+  nexWeekMonday9AM.setHours(9, 0, 0, 0);
 
+  let nextDay9AM = new Date();
+  nextDay9AM.setDate(nextDay9AM.getDate() + 1);
+  nextDay9AM.setHours(9, 0, 0, 0);
 
 
   return (
@@ -25,7 +31,7 @@ export default function TasksUpcoming() {
         </div>
         <div
           className="no-scrollbar grid h-[92%] grid-cols-2 grid-rows-[fit-content(40%)_minmax(60%,auto)] gap-4
-           overflow-clip max-sm:flex max-sm:flex-col max-sm:overflow-y-scroll"
+           overflow-scroll pb-1 max-sm:flex max-sm:flex-col max-sm:overflow-y-scroll"
         >
           {/*TODAY*/}
           <div className="col-span-full">
@@ -39,7 +45,7 @@ export default function TasksUpcoming() {
           </div>
 
           <div
-            className="col-span-full flex w-full flex-row justify-between gap-4 max-md:flex-col max-md:justify-start">
+            className="col-span-full flex w-full flex-row justify-between gap-4 max-lg:flex-col max-lg:justify-start">
             <div className="w-full">
               {/*Tomorrow*/}
               <Tasks
@@ -48,6 +54,7 @@ export default function TasksUpcoming() {
                 getAddList={getAddList}
                 predicate={(value) => isForTomorrow(value)}
                 title="Tomorrow"
+                startDate={nextDay9AM}
               />
             </div>
             <div className="w-full ">
@@ -58,6 +65,7 @@ export default function TasksUpcoming() {
                 getAddList={getAddList}
                 predicate={(value) => isForNextWeek(value)}
                 title="Next Week"
+                startDate={nexWeekMonday9AM}
               />
             </div>
           </div>

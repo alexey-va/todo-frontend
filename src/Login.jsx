@@ -3,9 +3,31 @@ import { useState } from "react";
 
 export default function Login({ loadData }) {
 
-  const [incorrect, setIncorrect] = useState(false);
+  const [error, setError] = useState({
+    errorLogin: false,
+    message: "",
+    errorPassword: false,
+  });
+
+  const checkForNonLatin1 = (str) => {
+    for (let i = 0; i < str.length; i++) {
+      if (str.charCodeAt(i) > 255) return true;
+    }
+    return false;
+  }
   
   const handleLogin = () => {
+    if (checkForNonLatin1(document.getElementById("login").value) || checkForNonLatin1(document.getElementById("password").value)) {
+      setError({
+        errorLogin:  true,
+        errorPassword: true,
+        message: "Логин и пароль должны содержать только латинские символы",
+      });
+      restartAnimation(document.getElementById("login"))
+      restartAnimation(document.getElementById("password"))
+      return;
+    }
+
     let login = document.getElementById("login").value;
     let password = document.getElementById("password").value;
 
@@ -14,11 +36,29 @@ export default function Login({ loadData }) {
       password: password,
     };
     loadData().then((result) => {
-      setIncorrect(!result)
+      if(result === true) return;
+      setError({
+        errorLogin:  true,
+        errorPassword: true,
+        message: "Неверный логин или пароль",
+      });
+      restartAnimation(document.getElementById("login"))
+      restartAnimation(document.getElementById("password"))
     });
   };
 
   const handleRegister = () => {
+    if (checkForNonLatin1(document.getElementById("login").value) || checkForNonLatin1(document.getElementById("password").value)) {
+      setError({
+        errorLogin:  true,
+        errorPassword: true,
+        message: "Логин и пароль должны содержать только латинские символы",
+      });
+      restartAnimation(document.getElementById("login"))
+      restartAnimation(document.getElementById("password"))
+      return;
+    }
+
     let login = document.getElementById("login").value;
     let password = document.getElementById("password").value;
 
@@ -33,19 +73,24 @@ export default function Login({ loadData }) {
       }),
     })
       .then((response) => {
-        if (response.status === 401) {
+        if (response.status !== 200) {
           console.log("Login failed");
+        }
+        if(response.status === 418){
+          setError({
+            errorLogin:  true,
+            errorPassword: false,
+            message: "Пользователь с таким именем уже существует",
+          });
+          restartAnimation(document.getElementById("login"))
           return;
         }
         return response.json();
       })
       .then((data) => {
         console.log(data);
-        if (data === undefined || data === null) {
-          console.log("Login failed");
-          return;
-        }
-        console.log("Login success");
+        if (data === undefined || data === null) return;
+
         credentials.value = {
           login: login,
           password: password,
@@ -54,10 +99,21 @@ export default function Login({ loadData }) {
       });
   };
 
+  const restartAnimation = (element) => {
+    element.classList.remove("animate-shake");
+    void element.offsetWidth; // Trigger reflow to restart animation
+    element.classList.add("animate-shake");
+  };
+
   return (
     <>
-      <div className="flex items-center justify-center rounded-lg bg-white p-8">
-        <div className="grid grid-cols-3  gap-4">
+      <div className="flex flex-col items-center justify-center rounded-lg bg-white p-8 w-[20rem]">
+        <div className="grid grid-cols-3 gap-4">
+          <div className="col-span-3 text-center -mx-2">
+            <div className="font-semibold text-red-400">
+              {error.errorLogin || error.errorPassword ? error.message : ""}
+            </div>
+          </div>
           <label htmlFor="login" className="text-lg font-semibold">
             Логин
           </label>
@@ -65,9 +121,11 @@ export default function Login({ loadData }) {
             type="text"
             id="login"
             className={`col-span-2 h-[2rem] w-[10rem] rounded-md border bg-gray-100 px-2
-            ${incorrect ? "border-red-500" : "border-gray-100"}`}
+            ${error.errorLogin ? "animate-shake border-red-500" : "border-gray-100"}`}
             placeholder="test"
-            defaultValue={credentials.value.login ? credentials.value.login : ""}
+            defaultValue={
+              credentials.value.login ? credentials.value.login : ""
+            }
           />
 
           <label htmlFor="login" className="text-lg font-semibold">
@@ -77,19 +135,21 @@ export default function Login({ loadData }) {
             type="password"
             id="password"
             className={`col-span-2 h-[2rem] w-[10rem] rounded-md border bg-gray-100 px-2
-            ${incorrect ? "border-red-500" : "border-gray-100"}`}
+            ${error.errorPassword ? "animate-shake border-red-500" : "border-gray-100"}`}
             placeholder="123"
-            defaultValue={credentials.value.password ? credentials.value.password : ""}
+            defaultValue={
+              credentials.value.password ? credentials.value.password : ""
+            }
           />
 
           <button
-            className="col-span-3 mt-2 rounded-md bg-blue-500 px-2 py-1 text-lg text-white"
+            className="col-span-3 mt-2 rounded-md bg-blue-500 px-2 py-1 text-lg text-white hover:bg-blue-700 transition-all"
             onClick={() => handleLogin()}
           >
             Войти
           </button>
           <button
-            className="col-span-3 -mt-2 rounded-md bg-red-700 px-2 py-1 text-lg text-white"
+            className="col-span-3 -mt-2 rounded-md bg-gray-500 px-2 py-1 text-lg text-white hover:bg-gray-700 transition-all"
             onClick={() => handleRegister()}
           >
             Регистрация

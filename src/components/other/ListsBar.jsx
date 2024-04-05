@@ -64,6 +64,9 @@ export default function ListsBar() {
         arr.push(data.taskList);
         listInputRef.current.value = "";
         lists.value = arr;
+        setTimeout(() => {
+          setCreate(false);
+        }, 500);
       });
   };
 
