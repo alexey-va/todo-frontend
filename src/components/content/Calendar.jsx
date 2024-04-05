@@ -59,6 +59,16 @@ export default function Calendar() {
       let d2 = fromTimestamp(value.endDate);
       let duration = d2 - d1;
 
+      let startOfThisDay = new Date();
+      startOfThisDay.setHours(0, 0, 0, 0);
+      let endOfThisDay = new Date();
+      endOfThisDay.setHours(23, 59, 59, 999);
+
+      //console.log("CAL: ", d1, d2, startOfThisDay, endOfThisDay);
+
+      // check for the task to be in the current day
+      if (d1 > endOfThisDay || d2 < startOfThisDay) return "";
+
 
       let isListExists = lists.value.find((i) => i.id === value.list);
       if (!isListExists) return "";

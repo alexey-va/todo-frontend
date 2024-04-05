@@ -97,61 +97,62 @@ export default function TaskCreator({startDate}) {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       ></input>
-      <div
-        className={`relative ${
-          title !== "" ? "" : "pointer-events-none h-0 opacity-0"
-        } transition-all`}
-      >
-        <div className="flex flex-col gap-2 py-2 text-sm">
-          <div className="flex flex-col gap-2 rounded-md bg-gray-100 p-2">
-            <div className="flex items-center justify-between px-1">
-              <label htmlFor="start" className="font-semibold">
-                Время начала
-              </label>
-              <input
-                ref={beginDateRef}
-                id="start"
-                className="rounded-md p-1 px-2"
-                type="datetime-local"
-                defaultValue={nowString}
-                onChange={(e) => hanleBeginDateChange(e)}
-              />
+      <div className={`${title !== "" ? "h-[12rem] " : "h-0"} relative transition-all`}>
+        <div
+          className={`${title !== "" ? "" : "pointer-events-none opacity-0"}
+           transition-all absolute w-full`}
+        >
+          <div className="w-full flex flex-col gap-2 py-2 text-sm">
+            <div className="flex flex-col gap-2 rounded-md bg-gray-100 p-2">
+              <div className="flex items-center justify-between px-1">
+                <label htmlFor="start" className="font-semibold">
+                  Время начала
+                </label>
+                <input
+                  ref={beginDateRef}
+                  id="start"
+                  className="rounded-md p-1 px-2"
+                  type="datetime-local"
+                  defaultValue={nowString}
+                  onChange={(e) => hanleBeginDateChange(e)}
+                />
+              </div>
+              <div className="flex items-center justify-between px-1">
+                <label htmlFor="end" className="font-semibold">
+                  Время окончания
+                </label>
+                <input
+                  ref={endDateRef}
+                  id="end"
+                  className="rounded-md p-1 px-2"
+                  type="datetime-local"
+                  defaultValue={inOneHourString}
+                  min={beginDateInput}
+                  onChange={(e) => handleEndDateChange(e)}
+                />
+              </div>
+              <div className="flex items-center justify-between px-1">
+                <label htmlFor="list" className="font-semibold">
+                  Список
+                </label>
+                <select name="list" id="list" className="rounded-md px-2 py-1">
+                  {lists.value.map((value) => {
+                    return (
+                      <option key={value.id} value={value.id}>
+                        {value.title}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
             </div>
-            <div className="flex items-center justify-between px-1">
-              <label htmlFor="end" className="font-semibold">
-                Время окончания
-              </label>
-              <input
-                ref={endDateRef}
-                id="end"
-                className="rounded-md p-1 px-2"
-                type="datetime-local"
-                defaultValue={inOneHourString}
-                min={beginDateInput}
-                onChange={(e) => handleEndDateChange(e)}
-              />
-            </div>
-            <div className="flex items-center justify-between px-1">
-              <label htmlFor="list" className="font-semibold">
-                Список
-              </label>
-              <select name="list" id="list" className="rounded-md px-2 py-1">
-                {lists.value.map((value) => {
-                  return (
-                    <option key={value.id} value={value.id}>
-                      {value.title}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+            <button
+              className="w-full rounded-md bg-blue-500 py-1 text-lg text-white"
+              onClick={() => handleCreateTask()}
+            >
+              Создать
+            </button>
           </div>
-          <button
-            className="w-full rounded-md bg-blue-500 py-1 text-lg text-white"
-            onClick={() => handleCreateTask()}
-          >
-            Создать
-          </button>
         </div>
       </div>
     </>

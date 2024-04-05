@@ -7,14 +7,13 @@ import {
 } from "../../Signals.jsx";
 import { useState } from "react";
 import TaskCreator from "../other/TaskCreator.jsx";
-import { fromTimestamp, fromTimestampToStringWithouTZ, serializeDate } from "../../Utils.jsx";
+import {
+  fromTimestamp,
+  fromTimestampToStringWithouTZ,
+  serializeDate,
+} from "../../Utils.jsx";
 
-export default function Tasks({
-  getAddList,
-  predicate,
-  title,
-  startDate
-}) {
+export default function Tasks({ getAddList, predicate, title, startDate }) {
   let seen = false;
 
   const [selectedTask, setSelectedTask] = useState(-1);
@@ -120,7 +119,7 @@ export default function Tasks({
   }
 
   return (
-    <div className="flex h-full w-full flex-col overflow-scroll no-scrollbar rounded-md border p-3 text-[1rem]">
+    <div className="no-scrollbar flex h-full w-full flex-col overflow-scroll rounded-md border p-3 text-[1rem]">
       {title ? (
         <>
           <div className="mb-2 text-[1.0rem] font-bold">{title}</div>
@@ -132,11 +131,12 @@ export default function Tasks({
       <div className="flex flex-row">
         <div className="flex flex-grow flex-col">
           <div className="relative mb-2">
-            <TaskCreator startDate={startDate}/>
+            <TaskCreator startDate={startDate} />
           </div>
           <div className="no-scrollbar overflow-y-scroll">
+
             {allTasks.value.map((value) => {
-              if (!predicate(value)){
+              if (!predicate(value)) {
                 return "";
               }
 
@@ -181,90 +181,97 @@ export default function Tasks({
                   </div>
 
                   {/* EDITOR */}
-                    <div className={`${selectedTask === value.id ? "h-[14rem]" : "h-0"} transition-all overflow-y-hidden  relative w-full`}>
-                      <div
-                        className={
-                          `${selectedTask === value.id ? "" : "-translate-y-[3rem]"} transition-all absolute mt-2 flex w-full flex-col gap-2 text-sm`
-                        }
-                      >
-                        <div className="grid grid-cols-2 gap-2 rounded-md bg-gray-100 p-2">
-                          <label
-                            htmlFor={`start${value.id}`}
-                            className="font-semibold"
-                          >
-                            Название
-                          </label>
-                          <input
-                            id={`title${value.id}`}
-                            className="rounded-md p-1 px-2"
-                            type="text"
-                            defaultValue={value.title}
-                          />
+                  <div
+                    className={`${
+                      selectedTask === value.id ? "h-[14rem]" : "h-0"
+                    } relative w-full  overflow-y-hidden transition-all`}
+                  >
+                    <div
+                      className={`${
+                        selectedTask === value.id ? "" : "-translate-y-[3rem]"
+                      } absolute mt-2 flex w-full flex-col gap-2 text-sm transition-all`}
+                    >
+                      <div className="grid grid-cols-2 gap-2 rounded-md bg-gray-100 p-2">
+                        <label
+                          htmlFor={`start${value.id}`}
+                          className="font-semibold"
+                        >
+                          Название
+                        </label>
+                        <input
+                          id={`title${value.id}`}
+                          className="rounded-md p-1 px-2"
+                          type="text"
+                          defaultValue={value.title}
+                        />
 
-                          <label
-                            htmlFor={`start${value.id}`}
-                            className="font-semibold"
-                          >
-                            Время начала
-                          </label>
-                          <input
-                            id={`start${value.id}`}
-                            className="rounded-md p-1 px-2"
-                            type="datetime-local"
-                            defaultValue={fromTimestampToStringWithouTZ(value.startDate)}
-                          />
+                        <label
+                          htmlFor={`start${value.id}`}
+                          className="font-semibold"
+                        >
+                          Время начала
+                        </label>
+                        <input
+                          id={`start${value.id}`}
+                          className="rounded-md p-1 px-2"
+                          type="datetime-local"
+                          defaultValue={fromTimestampToStringWithouTZ(
+                            value.startDate,
+                          )}
+                        />
 
-                          <label
-                            htmlFor={`end${value.id}`}
-                            className="font-semibold"
-                          >
-                            Время окончания
-                          </label>
-                          <input
-                            id={`end${value.id}`}
-                            className="rounded-md p-1 px-2"
-                            type="datetime-local"
-                            defaultValue={fromTimestampToStringWithouTZ(value.endDate)}
-                          />
+                        <label
+                          htmlFor={`end${value.id}`}
+                          className="font-semibold"
+                        >
+                          Время окончания
+                        </label>
+                        <input
+                          id={`end${value.id}`}
+                          className="rounded-md p-1 px-2"
+                          type="datetime-local"
+                          defaultValue={fromTimestampToStringWithouTZ(
+                            value.endDate,
+                          )}
+                        />
 
-                          <label
-                            htmlFor={`list${value.id}`}
-                            className="font-semibold"
-                          >
-                            Список
-                          </label>
-                          <select
-                            name={`list${value.id}`}
-                            id={`list${value.id}`}
-                            className="rounded-md px-2 py-1"
-                            defaultValue={value.list}
-                          >
-                            {lists.value.map((value) => {
-                              return (
-                                <option key={value.id} value={value.id}>
-                                  {value.title}
-                                </option>
-                              );
-                            })}
-                          </select>
-                        </div>
-                        <div className="flex w-full flex-row justify-between gap-6">
-                          <button
-                            className="flex-grow rounded-md bg-blue-500 px-2 py-1 text-lg text-white"
-                            onClick={() => handleTaskChange(value.id, false)}
-                          >
-                            Изменить
-                          </button>
-                          <button
-                            className="flex-grow rounded-md bg-red-500 px-2 py-1 text-lg text-white"
-                            onClick={() => handleTaskChange(value.id, true)}
-                          >
-                            Удалить
-                          </button>
-                        </div>
+                        <label
+                          htmlFor={`list${value.id}`}
+                          className="font-semibold"
+                        >
+                          Список
+                        </label>
+                        <select
+                          name={`list${value.id}`}
+                          id={`list${value.id}`}
+                          className="rounded-md px-2 py-1"
+                          defaultValue={value.list}
+                        >
+                          {lists.value.map((value) => {
+                            return (
+                              <option key={value.id} value={value.id}>
+                                {value.title}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                      <div className="flex w-full flex-row justify-between gap-6">
+                        <button
+                          className="flex-grow rounded-md bg-blue-500 px-2 py-1 text-lg text-white"
+                          onClick={() => handleTaskChange(value.id, false)}
+                        >
+                          Изменить
+                        </button>
+                        <button
+                          className="flex-grow rounded-md bg-red-500 px-2 py-1 text-lg text-white"
+                          onClick={() => handleTaskChange(value.id, true)}
+                        >
+                          Удалить
+                        </button>
                       </div>
                     </div>
-
+                  </div>
                 </div>
               );
             })}
