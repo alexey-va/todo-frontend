@@ -48,12 +48,16 @@ export default function App() {
         if (response.status === 401) {
           authed.value=false;
           return null;
+        }else if(response.status !== 200){
+          return undefined;
         }
         return response.json();
       })
       .then((data) => {
-        if (data === undefined || data === null) {
-          return false;
+        if (data === null) {
+          return 1;
+        } else if(data === undefined){
+          return 2;
         }
         console.log("Loaded: ", data);
         allTags.value = data.tags.sort((a, b) => a.id - b.id);
@@ -61,7 +65,7 @@ export default function App() {
         allTasks.value = data.tasks.sort((a, b) => a.id - b.id);
         stickers.value = data.stickers.sort((a, b) => a.id - b.id);
         authed.value = true;
-        return true;
+        return 0;
       });
   };
 

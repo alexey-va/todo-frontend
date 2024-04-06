@@ -32,7 +32,16 @@ export default function Login({ loadData }) {
       password: password,
     };
     loadData().then((result) => {
-      if(result === true) return;
+      if(result === 0) return;
+      if(result === 2){
+        setError({
+          errorLogin:  true,
+          errorPassword: false,
+          message: "Сайт временно недоступен",
+        });
+        restartAnimation(document.getElementById("login"))
+        return;
+      }
       setError({
         errorLogin:  true,
         errorPassword: true,
@@ -77,6 +86,14 @@ export default function Login({ loadData }) {
             errorLogin:  true,
             errorPassword: false,
             message: "Пользователь с таким именем уже существует",
+          });
+          restartAnimation(document.getElementById("login"))
+          return;
+        } else if(response.status !== 200){
+          setError({
+            errorLogin:  true,
+            errorPassword: false,
+            message: "Сайт временно недоступен",
           });
           restartAnimation(document.getElementById("login"))
           return;

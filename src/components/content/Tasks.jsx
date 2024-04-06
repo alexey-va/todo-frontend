@@ -131,7 +131,7 @@ export default function Tasks({ getAddList, predicate, title, startDate }) {
       <div className="flex flex-row">
         <div className="flex flex-grow flex-col">
           <div className="relative mb-2">
-            <TaskCreator startDate={startDate} />
+            <TaskCreator startDate={startDate} setSelectedTask={setSelectedTask}/>
           </div>
           <div className="no-scrollbar overflow-y-scroll">
 

@@ -2,7 +2,7 @@ import { allTasks, authed, credentials, lists } from "../../Signals.jsx";
 import { useRef, useState } from "react";
 import { serializeDate } from "../../Utils.jsx";
 
-export default function TaskCreator({startDate}) {
+export default function TaskCreator({startDate, setSelectedTask}) {
 
   const [beginDateInput, setBeginDateInput] = useState();
 
@@ -95,7 +95,10 @@ export default function TaskCreator({startDate}) {
               max-sm:text-[0.85rem] w-full"
         placeholder={`Add task`}
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(e) => {
+          setTitle(e.target.value);
+          setSelectedTask(-1);
+        }}
       ></input>
       <div className={`${title !== "" ? "h-[12rem] " : "h-0"} relative transition-all`}>
         <div

@@ -17,6 +17,10 @@ export default function TasksOfList({ listId }) {
   if (list === null || list == undefined) list = [];
 
   const handleListDelete = (id) => {
+    if (lists.value.length === 1) {
+      //alert("Нельзя удалить последний список");
+      return;
+    }
     fetch(
       `https://todo-back.alexeyav.ru/api/v1/user/tasklists?local_id=${id}`,
       {
@@ -47,7 +51,7 @@ export default function TasksOfList({ listId }) {
   };
 
   return (
-    <div className="relative flex h-full flex-col px-4 max-sm:px-2 pb-4">
+    <div className="relative flex h-full flex-col px-4 pb-4 max-sm:px-2">
       <div className="flex flex-row items-center gap-4 pb-2 text-[1.75rem] font-semibold">
         <div className="">{list.title ? list.title : "Error in name"}</div>
 
@@ -60,14 +64,18 @@ export default function TasksOfList({ listId }) {
         ) : (
           ""
         )}
-        <div className="sm:ml-auto self-center flex items-center">
-          <button className="rounded-md bg-red-500 px-2 py-1 text-base text-white opacity-90"
-                  onClick={() => handleListDelete(listId)}>
+        <div className="flex items-center self-center sm:ml-auto">
+          <button
+            className={
+              `rounded-md ${lists.value.length === 1 ? "bg-gray-500" : "bg-red-500"}  px-2 py-1 text-base text-white opacity-90`
+            }
+            onClick={() => handleListDelete(listId)}
+          >
             Удалить
           </button>
         </div>
       </div>
-      <div className="overflow-scroll no-scrollbar grid h-full w-full grid-cols-1 grid-rows-1 gap-4">
+      <div className="no-scrollbar grid h-full w-full grid-cols-1 grid-rows-1 gap-4 overflow-scroll">
         <Tasks
           changeComplete={changeComplete}
           getAddList={getAddList}

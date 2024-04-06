@@ -59,31 +59,29 @@ export default function Calendar() {
       let d2 = fromTimestamp(value.endDate);
       let duration = d2 - d1;
 
+      let startedBeforeToday = !sameDay(d1, new Date());
+
       let startOfThisDay = new Date();
       startOfThisDay.setHours(0, 0, 0, 0);
       let endOfThisDay = new Date();
       endOfThisDay.setHours(23, 59, 59, 999);
 
-      //console.log("CAL: ", d1, d2, startOfThisDay, endOfThisDay);
-
       // check for the task to be in the current day
       if (d1 > endOfThisDay || d2 < startOfThisDay) return "";
 
 
+
       let isListExists = lists.value.find((i) => i.id === value.list);
       if (!isListExists) return "";
-      //console.log(d1.toISOString(), d2.toISOString(), duration/1000/60/60);
 
-      //console.log(value.startDate, value.endDate);
-      //console.log(!sameDay(d1, new Date()), d1, new Date());
-      //console.log((!sameDay(d2, new Date()) ), d2, new Date())
-      //if (!sameDay(d1, new Date())) return "";
-      //if (!sameDay(d2, new Date())) return "";
-      let margin = !sameDay(d1, new Date()) ? 0
-        : (d1.getHours() + d1.getMinutes() / 60.0) * 4;
+
+
+      let margin = !startedBeforeToday
+        ? (d1.getHours() + d1.getMinutes() / 60.0) * 4
+        : 0;
       let height = sameDay(new Date(), d2)
         ? duration / 1000 / 60 / 60 * 4
-        : (24 - d1.getHours() - d1.getMinutes() / 60.0) * 4;
+        : (d2.getHours() + d2.getMinutes()/60.0) * 4;
 
       let color = "#69f369";
       if (value.list !== undefined) {
@@ -110,6 +108,8 @@ export default function Calendar() {
       //console.log(margin, margin+height);
       let bottom = Math.min(margin + height, 25 * 4);
       let onTheBottom = bottom === 25 * 4;
+      let onTheTop = margin === 0;
+
 
       stack.push([margin, bottom]);
       //console.log(diff+" "+value.id)
@@ -117,7 +117,7 @@ export default function Calendar() {
         <div
           key={value.id}
           className={`absolute z-10 flex h-[3rem] flex-row overflow-hidden rounded-md bg-green-100
-            mix-blend-multiply ${onTheBottom ? "rounded-b-none" : ""}`}
+            mix-blend-multiply ${onTheBottom ? "rounded-b-none" : ""} ${onTheTop || startedBeforeToday ? "rounded-t-none" : ""}`}
           style={{
             marginTop: margin + `rem`,
             height: (bottom-margin) + "rem",
