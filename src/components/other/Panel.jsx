@@ -18,8 +18,8 @@ export default function Panel() {
     <>
       {/* Burger button */}
       <div
-        className={`absolute transition-all right-6 top-5 sm:top-5 sm:left-4
-         z-[1000] h-[2rem] w-[1.4rem] cursor-pointer  max-sm:fixed`}
+        className={`absolute right-6 top-5 z-[1000] h-[2rem] w-[1.4rem] cursor-pointer opacity-60 transition-all
+         transition-all hover:opacity-100 max-sm:fixed sm:left-4  sm:top-5`}
         onClick={() => setBurger((o) => !o)}
       >
         <span
@@ -41,14 +41,12 @@ export default function Panel() {
       {/* Burger button */}
 
       <div
-        className={`relative max-sm:absolute flex h-full origin-left  overflow-clip transition-all max-sm:z-[100] rounded-l-2xl
-      ${burger ? "pointer-events-none sm:w-[2rem]" : "sm:w-[15rem] "}`}
+        className={`relative flex h-full max-w-[40%] origin-left  overflow-clip rounded-l-2xl transition-all max-sm:absolute max-sm:z-[100]
+      ${burger ? "pointer-events-none sm:w-[2rem]" : "sm:w-[15rem]"}`}
       >
         <div
-          className={`no-scrollbar h-full absolute flex transition-all overflow-x-clip  ${
-            !burger
-              ? "bg-[#F4F4F4] max-sm:shadow-2xl"
-              : "-translate-x-[5rem]"
+          className={`no-scrollbar absolute flex h-full overflow-x-clip transition-all  ${
+            !burger ? "bg-[#F4F4F4] max-sm:shadow-2xl" : "-translate-x-[5rem]"
           } z-[5] flex-col overflow-x-visible overflow-y-scroll py-3 max-sm:fixed max-sm:z-[1000]  max-sm:h-full
            max-sm:w-fit max-sm:rounded-none`}
         >
@@ -66,7 +64,7 @@ export default function Panel() {
                 : "z-[5]"
             } w-full overflow-x-visible`}
           >
-            <Navigation burger={burger}/>
+            <Navigation burger={burger} />
             <TasksBar />
             <hr className="mx-2 my-2" />
             <ListsBar />
@@ -83,10 +81,27 @@ export default function Panel() {
               />
             </div>
           </div>
-          <div className={`mt-auto px-2 ${burger ? "invisible" : ""}`}>
+          <div
+            className={`mt-auto px-2 ${
+              burger ? "invisible" : ""
+            } flex flex-col gap-2`}
+          >
+            <a href="https://github.com/alexey-va/todo-back">
+              <div
+                className={`flex items-center justify-center rounded-md bg-gray-500 py-1 text-white opacity-90 transition-all hover:bg-gray-600`}
+              >
+                Backend Repo
+              </div>
+            </a>
+            <a href="https://github.com/alexey-va/todo-frontend">
+
+              <div
+                className={`flex items-center justify-center rounded-md bg-gray-500 py-1 text-white opacity-90 transition-all hover:bg-gray-600`}
+              >Frontend Repo</div>
+            </a>
             <button
               className="mt-auto flex w-full items-center justify-center rounded-md
-            bg-red-400 py-1 text-white"
+            bg-red-500 py-1 text-white opacity-90 transition-all hover:bg-red-600"
               onClick={() => (authed.value = false)}
             >
               Выйти
