@@ -22,7 +22,9 @@ function getSignalFromLocalStorage(signalKey, defaultValue) {
   }
 
   const storedValueString = localStorage.getItem(signalKey);
-  return storedValueString !== null ? JSON.parse(storedValueString) : defaultValue;
+  return storedValueString !== null
+    ? JSON.parse(storedValueString)
+    : defaultValue;
 }
 
 // Update the lastUpdated timestamp whenever data is saved
@@ -38,16 +40,12 @@ export const searchTags = signal(
 export const selectedSection = signal(
   getSignalFromLocalStorage("selectedSection", { group: "tasks", id: 3 }),
 );
-export const authed = signal(
-  getSignalFromLocalStorage("authed", false),
-);
+export const authed = signal(getSignalFromLocalStorage("authed", false));
 export const credentials = signal(
   getSignalFromLocalStorage("credentials", { login: "", password: "" }),
 );
 
-export const search = signal(
-  getSignalFromLocalStorage("search", "")
-);
+export const search = signal(getSignalFromLocalStorage("search", ""));
 
 {
   effect(() => {
@@ -56,7 +54,10 @@ export const search = signal(
   });
 
   effect(() => {
-    localStorage.setItem("selectedSection", JSON.stringify(selectedSection.value));
+    localStorage.setItem(
+      "selectedSection",
+      JSON.stringify(selectedSection.value),
+    );
     updateLastUpdated();
   });
 
@@ -67,20 +68,21 @@ export const search = signal(
   });
 }
 
-
 export const tasksNew = computed(() => {
   let obj = {};
   obj.today = allTasks.value
-    .filter(i => isForToday(i))
-    .filter(i => lists.value.find((j) => j.id === i.list) !== undefined)
+    .filter((i) => isForToday(i))
+    .filter((i) => lists.value.find((j) => j.id === i.list) !== undefined)
     .filter((i) => i.completed === false).length;
 
   obj.upcoming = allTasks.value
-    .filter(i => isForToday(i))
-    .filter(i => lists.value.find((j) => j.id === i.list) !== undefined)
+    .filter((i) => isForToday(i))
+    .filter((i) => lists.value.find((j) => j.id === i.list) !== undefined)
     .filter((i) => i.completed === false).length;
   return obj;
 });
+
+export const backend = signal("https://todo-back.alexeyav.ru/api/v1/");
 
 export const calendarScroll = signal({ translate: 500, pointer: 0 });
 export const listsNew = computed(() => {
@@ -97,8 +99,6 @@ export const listsNew = computed(() => {
   });
   return obj;
 });
-
-
 
 // FROM BACKEND GET THIS
 

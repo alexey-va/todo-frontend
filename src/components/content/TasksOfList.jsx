@@ -22,7 +22,7 @@ export default function TasksOfList({ listId }) {
       return;
     }
     fetch(
-      `https://todo-back.alexeyav.ru/api/v1/user/tasklists?local_id=${id}`,
+      `${backend.value}user/tasklists?local_id=${id}`,
       {
         method: "DELETE",
         headers: {

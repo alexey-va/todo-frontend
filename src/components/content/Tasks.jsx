@@ -1,9 +1,9 @@
 import {
   allTasks,
-  authed,
+  authed, backend,
   credentials,
   lists,
-  search,
+  search
 } from "../../Signals.jsx";
 import { useState } from "react";
 import TaskCreator from "../other/TaskCreator.jsx";
@@ -20,7 +20,7 @@ export default function Tasks({ getAddList, predicate, title, startDate }) {
 
   const handleTaskComplete = (id) => {
     //console.log("Update "+id)
-    fetch("https://todo-back.alexeyav.ru/api/v1/user/tasks", {
+    fetch(`${backend.value}user/tasks`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export default function Tasks({ getAddList, predicate, title, startDate }) {
     let serializedStart = serializeDate(startDateTime);
     let serializedEnd = serializeDate(endDateTime);
 
-    fetch(`https://todo-back.alexeyav.ru/api/v1/user/tasks?task_list=${list}`, {
+    fetch(`${backend.value}user/tasks?task_list=${list}`, {
       method: isDelete ? "DELETE" : "PUT",
       headers: {
         "Content-Type": "application/json",

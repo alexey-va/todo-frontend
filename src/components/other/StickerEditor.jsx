@@ -1,5 +1,5 @@
 import Tags from "./Tags.jsx";
-import { authed, credentials, editedSticker, stickers } from "../../Signals.jsx";
+import { authed, backend, credentials, editedSticker, stickers } from "../../Signals.jsx";
 import { useRef } from "react";
 
 export default function StickerEditor() {
@@ -35,7 +35,7 @@ export default function StickerEditor() {
       credentials.value.password,
     );
 
-    fetch("https://todo-back.alexeyav.ru/api/v1/user/stickers", {
+    fetch(`${backend.value}user/stickers`, {
       method: editedSticker.value.type === "edit" ? "PUT" : "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export default function StickerEditor() {
 
   const handleDelete = () => {
     fetch(
-      `https://todo-back.alexeyav.ru/api/v1/user/stickers?local_id=${editedSticker.value.id}`,
+      `${backend.value}user/stickers?local_id=${editedSticker.value.id}`,
       {
         method: "DELETE",
         headers: {

@@ -3,7 +3,7 @@ import Panel from "./components/other/Panel.jsx";
 import TasksUpcoming from "./components/content/TasksUpcoming.jsx";
 import {
   allTags,
-  allTasks, authed, credentials,
+  allTasks, authed, backend, credentials,
   lists,
   selectedSection,
   stickers
@@ -38,7 +38,7 @@ export default function App() {
       return false;
     }
     //console.log("credentials", credentials.value.login, credentials.value.password)
-    return fetch("https://todo-back.alexeyav.ru/api/v1/user", {
+    return fetch(`${backend.value}user`, {
       method: "GET",
       headers: {
         "Authorization": "Basic " + btoa(credentials.value.login + ":" + credentials.value.password),

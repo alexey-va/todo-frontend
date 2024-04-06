@@ -3,7 +3,7 @@ import {
   selectedSection,
   lists,
   listsNew,
-  credentials, authed
+  credentials, authed, backend
 } from "../../Signals.jsx";
 
 export default function ListsBar() {
@@ -44,7 +44,7 @@ export default function ListsBar() {
     };
     let arr = [...lists.value];
     //console.log(JSON.stringify(list));
-    fetch("https://todo-back.alexeyav.ru/api/v1/user/tasklists", {
+    fetch(`${backend.value}user/tasklists`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

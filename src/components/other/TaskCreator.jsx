@@ -1,4 +1,4 @@
-import { allTasks, authed, credentials, lists } from "../../Signals.jsx";
+import { allTasks, authed, backend, credentials, lists } from "../../Signals.jsx";
 import { useRef, useState } from "react";
 import { serializeDate } from "../../Utils.jsx";
 
@@ -53,7 +53,7 @@ export default function TaskCreator({startDate, setSelectedTask}) {
     const upcoming = 0;
     setTitle("")
 
-    fetch(`https://todo-back.alexeyav.ru/api/v1/user/tasks?task_list=${list}`, {
+    fetch(`${backend.value}user/tasks?task_list=${list}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
