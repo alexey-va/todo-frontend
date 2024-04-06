@@ -101,8 +101,9 @@ export const tasksNew = computed(() => {
 });
 
 export const backend = signal(
-  //"https://todo-back.alexeyav.ru/api/v1/"
-  "http://localhost:9090/api/v1/");
+  "https://todo-back.alexeyav.ru/api/v1/"
+  //"http://localhost:9090/api/v1/"
+);
 
 export const calendarScroll = signal({ translate: 500, pointer: 0 });
 export const listsNew = computed(() => {
