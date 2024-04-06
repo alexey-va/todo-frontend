@@ -40,6 +40,14 @@ export const searchTags = signal(
 export const selectedSection = signal(
   getSignalFromLocalStorage("selectedSection", { group: "tasks", id: 3 }),
 );
+
+export const createTaskTitle = signal(
+  getSignalFromLocalStorage("createTaskTitle", {
+    id: -1,
+    title: "",
+  }),
+);
+
 export const authed = signal(getSignalFromLocalStorage("authed", false));
 export const credentials = signal(
   getSignalFromLocalStorage("credentials", { login: "", password: "" }),
@@ -66,6 +74,16 @@ export const search = signal(getSignalFromLocalStorage("search", ""));
     localStorage.setItem("credentials", JSON.stringify(credentials.value));
     updateLastUpdated();
   });
+
+  effect(() => {
+    localStorage.setItem("search", JSON.stringify(search.value));
+    updateLastUpdated();
+  });
+
+  effect(() => {
+    localStorage.setItem("createTaskTitle", JSON.stringify(createTaskTitle.value));
+    updateLastUpdated();
+  });
 }
 
 export const tasksNew = computed(() => {
@@ -82,7 +100,9 @@ export const tasksNew = computed(() => {
   return obj;
 });
 
-export const backend = signal("https://todo-back.alexeyav.ru/api/v1/");
+export const backend = signal(
+  //"https://todo-back.alexeyav.ru/api/v1/"
+  "http://localhost:9090/api/v1/");
 
 export const calendarScroll = signal({ translate: 500, pointer: 0 });
 export const listsNew = computed(() => {

@@ -41,6 +41,7 @@ export default function TasksUpcoming() {
               getAddList={getAddList}
               predicate={(value) => isForToday(value)}
               title="Today"
+              taskContainer="today_container"
             />
           </div>
 
@@ -55,6 +56,7 @@ export default function TasksUpcoming() {
                 predicate={(value) => isForTomorrow(value)}
                 title="Tomorrow"
                 startDate={nextDay9AM}
+                taskContainer="tomorrow_container"
               />
             </div>
             <div className="w-full ">
@@ -66,6 +68,7 @@ export default function TasksUpcoming() {
                 predicate={(value) => isForNextWeek(value)}
                 title="Next Week"
                 startDate={nexWeekMonday9AM}
+                taskContainer="next_week_container"
               />
             </div>
           </div>

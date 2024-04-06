@@ -13,7 +13,7 @@ import {
   serializeDate,
 } from "../../Utils.jsx";
 
-export default function Tasks({ getAddList, predicate, title, startDate }) {
+export default function Tasks({ getAddList, predicate, title, startDate, defaultList, taskContainer }) {
   let seen = false;
 
   const [selectedTask, setSelectedTask] = useState(-1);
@@ -66,6 +66,7 @@ export default function Tasks({ getAddList, predicate, title, startDate }) {
     let end = document.getElementById(`end${id}`).value;
     let list = document.getElementById(`list${id}`).value;
     let newName = document.getElementById(`title${id}`).value;
+    if(newName.length === 0) return;
     let startDateTime = new Date(start);
     let endDateTime = new Date(end);
     let upcoming = allTasks.value.find((i) => i.id === id).upcoming;
@@ -100,8 +101,9 @@ export default function Tasks({ getAddList, predicate, title, startDate }) {
         return response.json();
       })
       .then((data) => {
+        console.log(data);
         if (isDelete) {
-          let tasks = data.tasks;
+          let tasks = [...allTasks.value].filter((i) => i.id !== id);
           allTasks.value = tasks.sort((a, b) => a.id - b.id);
         } else {
           let task = data.task;
@@ -131,7 +133,7 @@ export default function Tasks({ getAddList, predicate, title, startDate }) {
       <div className="flex flex-row">
         <div className="flex flex-grow flex-col">
           <div className="relative mb-2">
-            <TaskCreator startDate={startDate} setSelectedTask={setSelectedTask}/>
+            <TaskCreator startDate={startDate} setSelectedTask={setSelectedTask} defaultList={defaultList} taskContainer={taskContainer}/>
           </div>
           <div className="no-scrollbar overflow-y-scroll">
 
@@ -203,6 +205,7 @@ export default function Tasks({ getAddList, predicate, title, startDate }) {
                           className="rounded-md p-1 px-2"
                           type="text"
                           defaultValue={value.title}
+                          minLength={1}
                         />
 
                         <label

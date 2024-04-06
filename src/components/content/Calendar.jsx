@@ -198,9 +198,9 @@ export default function Calendar() {
                 <div className="flex h-[4rem] w-[5rem] min-w-[5rem] max-w-[5rem] grow-0">
                   <div className="w-1/2 text-right text-[0.65rem]">
                     <div className="mt-1">
-                      {value > 12 ? value % 12 : value}:00
+                      {value}:00
                     </div>
-                    <div className="-mt-[2px]">{value > 12 ? "PM" : "AM"}</div>
+                    { <div className="-mt-[2px]">{value > 12 ? "PM" : "AM"}</div> }
                   </div>
                 </div>
                 <div className="relative mr-3 h-[4rem] grow-0 basis-5/6">

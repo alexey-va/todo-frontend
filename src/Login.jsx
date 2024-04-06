@@ -1,4 +1,4 @@
-import { credentials } from "./Signals.jsx";
+import { backend, credentials } from "./Signals.jsx";
 import { hasNonLatin1 } from "./Utils.jsx";
 import { useState } from "react";
 
@@ -67,7 +67,7 @@ export default function Login({ loadData }) {
     let login = document.getElementById("login").value;
     let password = document.getElementById("password").value;
 
-    fetch("https://todo-back.alexeyav.ru/api/v1/register", {
+    fetch(`${backend.value}register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

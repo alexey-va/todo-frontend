@@ -1,5 +1,5 @@
 import {
-  authed, credentials,
+  authed, backend, credentials,
   editedSticker,
   lists,
   listsNew, selectedSection,
@@ -22,13 +22,14 @@ export default function TasksOfList({ listId }) {
       return;
     }
     fetch(
-      `${backend.value}user/tasklists?local_id=${id}`,
+      `${backend.value}user/tasklists`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Basic " + btoa(credentials.value.login + ":" + credentials.value.password),
         },
+        body: JSON.stringify({ id: id }),
       },
     )
       .then((response) => {
@@ -53,7 +54,7 @@ export default function TasksOfList({ listId }) {
   return (
     <div className="relative flex h-full flex-col px-4 pb-4 max-sm:px-2">
       <div className="flex flex-row items-center gap-4 pb-2 text-[1.75rem] font-semibold">
-        <div className="">{list.title ? list.title : "Error in name"}</div>
+        <div className="">{list.title ? list.title : "List"}</div>
 
         {tasksNew.value.upcoming > 0 ? (
           <NewCounter
@@ -80,6 +81,9 @@ export default function TasksOfList({ listId }) {
           changeComplete={changeComplete}
           getAddList={getAddList}
           predicate={(value) => value.list === list.id}
+          defaultList={list.id}
+          title={list.title}
+          taskContainer={`list_${list.id}_container`}
         />
       </div>
     </div>

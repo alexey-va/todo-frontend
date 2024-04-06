@@ -70,13 +70,14 @@ export default function StickerEditor() {
 
   const handleDelete = () => {
     fetch(
-      `${backend.value}user/stickers?local_id=${editedSticker.value.id}`,
+      `${backend.value}user/stickers`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Basic " + btoa(credentials.value.login + ":" + credentials.value.password),
         },
+        body: JSON.stringify({ id: editedSticker.value.id }),
       },
     )
       .then((response) => {
