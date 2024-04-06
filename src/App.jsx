@@ -3,10 +3,13 @@ import Panel from "./components/other/Panel.jsx";
 import TasksUpcoming from "./components/content/TasksUpcoming.jsx";
 import {
   allTags,
-  allTasks, authed, backend, credentials,
+  allTasks,
+  authed,
+  backend,
+  credentials,
   lists,
   selectedSection,
-  stickers
+  stickers,
 } from "./Signals.jsx";
 import TasksOfToday from "./components/content/TasksOfToday.jsx";
 import Calendar from "./components/content/Calendar.jsx";
@@ -16,7 +19,6 @@ import Login from "./Login.jsx";
 import { hasNonLatin1 } from "./Utils.jsx";
 
 export default function App() {
-
   const getComponent = () => {
     if (selectedSection.value.group === "tasks") {
       if (selectedSection.value.id === 0) return <TasksUpcoming />;
@@ -29,26 +31,31 @@ export default function App() {
   };
 
   const loadData = () => {
-    if(hasNonLatin1(credentials.value.login) || hasNonLatin1(credentials.value.password)) {
+    if (
+      hasNonLatin1(credentials.value.login) ||
+      hasNonLatin1(credentials.value.password)
+    ) {
       authed.value = false;
       credentials.value = {
         login: "",
         password: "",
-      }
-      return false;
+      };
+      return 1;
     }
     //console.log("credentials", credentials.value.login, credentials.value.password)
     return fetch(`${backend.value}user`, {
       method: "GET",
       headers: {
-        "Authorization": "Basic " + btoa(credentials.value.login + ":" + credentials.value.password),
-      }
+        Authorization:
+          "Basic " +
+          btoa(credentials.value.login + ":" + credentials.value.password),
+      },
     })
       .then((response) => {
         if (response.status === 401) {
-          authed.value=false;
+          authed.value = false;
           return null;
-        }else if(response.status !== 200){
+        } else if (response.status !== 200) {
           return undefined;
         }
         return response.json();
@@ -56,7 +63,7 @@ export default function App() {
       .then((data) => {
         if (data === null) {
           return 1;
-        } else if(data === undefined){
+        } else if (data === undefined) {
           return 2;
         }
         console.log("Loaded: ", data);
@@ -79,13 +86,16 @@ export default function App() {
         {authed.value ? (
           <div
             className="relative flex h-[90%] max-h-[60rem] w-[90%] min-w-[375px] max-w-5xl
-         flex-row rounded-2xl max-sm:rounded-none max-sm:pt-2  bg-white max-sm:p-0 max-sm:pb-2 shadow-2xl max-sm:h-full max-sm:max-h-full max-sm:w-full"
+          flex-row rounded-2xl bg-white  shadow-2xl max-sm:h-full max-sm:max-h-full max-sm:w-full
+          max-sm:rounded-none max-sm:p-0 max-sm:pb-2 max-sm:pt-0"
           >
             <Panel />
-            <div className="w-full sm:px-2 sm:pl-2 sm:pt-2">{getComponent()}</div>
+            <div className="w-full sm:px-2 sm:pl-2 pt-2">
+              {getComponent()}
+            </div>
           </div>
         ) : (
-          <Login loadData={loadData}/>
+          <Login loadData={loadData} />
         )}
       </div>
     </>

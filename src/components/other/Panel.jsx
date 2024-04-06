@@ -49,7 +49,8 @@ export default function Panel() {
             !burger
               ? "bg-[#F4F4F4] max-sm:shadow-2xl"
               : "-translate-x-[5rem]"
-          } z-[5] flex-col overflow-x-visible overflow-y-scroll py-3 max-sm:fixed max-sm:z-[1000]  max-sm:h-full max-sm:w-fit max-sm:rounded-none`}
+          } z-[5] flex-col overflow-x-visible overflow-y-scroll py-3 max-sm:fixed max-sm:z-[1000]  max-sm:h-full
+           max-sm:w-fit max-sm:rounded-none`}
         >
           <div
             className={`${
