@@ -91,13 +91,14 @@ export default function Logs() {
     const fetchLogs = async () => {
       try {
         const response = await fetch(
-          "https://todo-back.alexeyav.ru/api/v1/logs?from=0",
+          "https://todo-back.alexeyav.ru/api/v1/logs?from=0&limit=300",
         );
         if (!response.ok) {
           throw new Error("Failed to fetch logs");
         }
         const data = await response.json();
-        const formattedLogs = data.map((log) => log.message).join("\n");
+        //console.log(data);
+        const formattedLogs = data.map((log) => log).join("\n");
         setLogs(formattedLogs);
       } catch (error) {
         console.error(error);
