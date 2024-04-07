@@ -24,7 +24,7 @@ export default function Panel() {
     <>
       {/* Burger button */}
       <div
-        className={`absolute right-6 top-5 z-[1000] h-[2rem] w-[1.4rem] cursor-pointer opacity-60 transition-all
+        className={`absolute right-6 top-5 z-[1000] h-[2rem] w-[1.4rem] cursor-pointer opacity-60
          transition-all hover:opacity-100 max-sm:fixed sm:left-4  sm:top-5`}
         onClick={() => setBurger((o) => !o)}
       >
@@ -52,7 +52,7 @@ export default function Panel() {
       >
         <div
           className={`no-scrollbar absolute flex h-full overflow-x-clip transition-all  ${
-            !burger ? "bg-[#F4F4F4] max-sm:shadow-2xl" : "-translate-x-[5rem]"
+            !burger ? "bg-[#F4F4F4] max-sm:shadow-2xl" : "-translate-x-[15rem]"
           } z-[5] flex-col overflow-x-visible overflow-y-scroll py-3 max-sm:fixed max-sm:z-[1000]  max-sm:h-full
            max-sm:w-fit max-sm:rounded-none`}
         >
@@ -90,32 +90,32 @@ export default function Panel() {
           <div
             className={`mt-auto px-2 ${
               burger ? "invisible" : ""
-            } flex flex-col gap-2`}
+            } flex flex-col`}
           >
             <a href={`${hostUrl}/logs`}>
               <div
-                className={`flex items-center justify-center rounded-md bg-gray-500 py-1 text-white opacity-90 transition-all hover:bg-gray-600`}
+                className={`flex items-center justify-center py-1 text-black border-b font-semibold opacity-90 transition-all hover:bg-gray-300`}
               >
                 Logs
               </div>
             </a>
             <a href="https://github.com/alexey-va/todo-back">
               <div
-                className={`flex items-center justify-center rounded-md bg-gray-500 py-1 text-white opacity-90 transition-all hover:bg-gray-600`}
+                className={`flex items-center justify-center text-black border-b py-1 font-semibold opacity-90 transition-all hover:bg-gray-300`}
               >
                 Backend Repo
               </div>
             </a>
             <a href="https://github.com/alexey-va/todo-frontend">
               <div
-                className={`flex items-center justify-center rounded-md bg-gray-500 py-1 text-white opacity-90 transition-all hover:bg-gray-600`}
+                className={`flex items-center justify-center text-black border-b font-semibold py-1 opacity-90 transition-all hover:bg-gray-300`}
               >
                 Frontend Repo
               </div>
             </a>
             <button
-              className="mt-auto flex w-full items-center justify-center rounded-md
-            bg-red-500 py-1 text-white opacity-90 transition-all hover:bg-red-600"
+              className="mt-auto flex w-full items-center justify-center
+             py-1 text-red-900 font-semibold opacity-90 transition-all hover:bg-red-300"
               onClick={() => (authed.value = false)}
             >
               Выйти
