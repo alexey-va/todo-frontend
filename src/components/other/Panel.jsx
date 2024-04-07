@@ -45,23 +45,23 @@ export default function Panel() {
         ></span>
       </div>
       {/* Burger button */}
-
+      <div
+        className={`z-[3] backdrop-blur-[1px] ${
+          burger ? "max-sm:hidden" : ""
+        } max-sm:fixed max-sm:h-full max-sm:w-full`}
+        onMouseDown={() => setBurger((o) => !o)}
+      ></div>
       <div
         className={`relative flex h-full max-w-[40%] origin-left  overflow-clip rounded-l-2xl transition-all max-sm:absolute max-sm:z-[100]
       ${burger ? "pointer-events-none sm:w-[2rem]" : "sm:w-[15rem]"}`}
       >
         <div
           className={`no-scrollbar absolute flex h-full overflow-x-clip transition-all  ${
-            !burger ? "bg-[#F4F4F4] max-sm:shadow-2xl" : "-translate-x-[15rem]"
+            !burger ? "z-[100] bg-[#F4F4F4] max-sm:shadow-2xl" : "-translate-x-[15rem]"
           } z-[5] flex-col overflow-x-visible overflow-y-scroll py-3 max-sm:fixed max-sm:z-[1000]  max-sm:h-full
            max-sm:w-fit max-sm:rounded-none`}
         >
-          <div
-            className={`${
-              burger ? "max-sm:hidden" : ""
-            } max-sm:fixed max-sm:h-full max-sm:w-full`}
-            onMouseDown={() => setBurger((o) => !o)}
-          ></div>
+
 
           <div
             className={`${
@@ -82,7 +82,8 @@ export default function Panel() {
               <Tags
                 add="px-2"
                 parentTagsSignal={searchTags}
-                onChange={() => {}}
+                onChange={() => {
+                }}
                 setParentTags={setSearchTags}
               />
             </div>
