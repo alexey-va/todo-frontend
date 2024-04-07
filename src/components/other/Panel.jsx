@@ -2,12 +2,18 @@ import Navigation from "./Navigation.jsx";
 import TasksBar from "./TasksBar.jsx";
 import ListsBar from "./ListsBar.jsx";
 import Tags from "./Tags.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { authed, searchTags } from "../../Signals.jsx";
 
 export default function Panel() {
   const [burger, setBurger] = useState(false);
 
+  const [hostUrl, setHostUrl] = useState('');
+
+  useEffect(() => {
+    setHostUrl(window.location.origin);
+  }, []);
+  
   const setSearchTags = (tags) => {
     let dict = searchTags.value;
     dict.tags = tags;
@@ -86,6 +92,13 @@ export default function Panel() {
               burger ? "invisible" : ""
             } flex flex-col gap-2`}
           >
+            <a href={`${hostUrl}/logs`}>
+              <div
+                className={`flex items-center justify-center rounded-md bg-gray-500 py-1 text-white opacity-90 transition-all hover:bg-gray-600`}
+              >
+                Logs
+              </div>
+            </a>
             <a href="https://github.com/alexey-va/todo-back">
               <div
                 className={`flex items-center justify-center rounded-md bg-gray-500 py-1 text-white opacity-90 transition-all hover:bg-gray-600`}
@@ -94,10 +107,11 @@ export default function Panel() {
               </div>
             </a>
             <a href="https://github.com/alexey-va/todo-frontend">
-
               <div
                 className={`flex items-center justify-center rounded-md bg-gray-500 py-1 text-white opacity-90 transition-all hover:bg-gray-600`}
-              >Frontend Repo</div>
+              >
+                Frontend Repo
+              </div>
             </a>
             <button
               className="mt-auto flex w-full items-center justify-center rounded-md
