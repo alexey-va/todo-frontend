@@ -44,11 +44,11 @@ export function StickerWall() {
                   onClick={() =>editSticker(value)}
                 >
                   <div className="overflow-scroll no-scrollbar">
-                  <div className="mb-1 text-[0.7rem] font-bold">
+                  <div className="mb-1 text-[1.5rem] font-bold">
                     {value.title}
                   </div>
 
-                  <div className="text-[0.6rem] max-sm:mb-2">{value.text}</div>
+                  <div className="text-[1rem] max-sm:mb-2">{value.text}</div>
                   </div>
                 </div>
               );
